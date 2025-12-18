@@ -13,10 +13,10 @@ import {
   Network,
   CheckCircle2
 } from "lucide-react";
-import { HeroBackdrop } from "@/components/hero-backdrop";
+import { Hero3DBackground } from "@/components/hero-3d-background";
+import { Network3D } from "@/components/network-3d";
 import { TickerTape } from "@/components/ticker-tape";
 import { TrustStrip } from "@/components/trust-strip";
-import { SupplyGraphMap } from "@/components/supply-graph-map";
 import { DualAgentVisual } from "@/components/dual-agent-visual";
 import { FrictionCalculator } from "@/components/friction-calculator";
 import { DemoForm } from "@/components/demo-form";
@@ -70,7 +70,7 @@ export default function HomePage() {
     <main className="relative">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] overflow-hidden">
-        <HeroBackdrop />
+        <Hero3DBackground variant="hero" />
 
         <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-20 lg:px-8 lg:pt-32">
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
@@ -158,7 +158,7 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <SupplyGraphMap />
+              <Network3D variant="supply-chain" height="h-[450px]" />
             </motion.div>
           </div>
 

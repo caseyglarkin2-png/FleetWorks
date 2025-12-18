@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Radio, Layers, Zap, Globe, Activity, Database } from "lucide-react";
-import { SupplyGraphMap } from "@/components/supply-graph-map";
+import { Network3D } from "@/components/network-3d";
 
 const features = [
   {
@@ -109,7 +109,7 @@ export default function NetworkPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <SupplyGraphMap />
+              <Network3D variant="graph" height="h-[500px]" />
             </motion.div>
           </div>
         </div>

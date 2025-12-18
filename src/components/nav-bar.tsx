@@ -5,7 +5,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronDown,
-  Layers,
   Users,
   Network,
   Shield,
@@ -17,6 +16,7 @@ import {
   Menu,
   X
 } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 
 const platformItems = [
   {
@@ -139,17 +139,7 @@ export function NavBar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
-            <Layers className="h-5 w-5 text-emerald-400" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold tracking-tight text-white">
-              FleetWorks
-            </span>
-            <span className="hidden text-[10px] uppercase tracking-widest text-slate-500 sm:block">
-              Capacity Orchestration
-            </span>
-          </div>
+          <Logo variant="full" />
         </Link>
 
         {/* Desktop Nav */}

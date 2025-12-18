@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Layers, Twitter, Linkedin, Github } from "lucide-react";
+import { Twitter, Linkedin, Github } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 
 const footerLinks = {
   Platform: [
@@ -26,11 +27,8 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
-                <Layers className="h-5 w-5 text-emerald-400" />
-              </div>
-              <span className="text-xl font-semibold text-white">FleetWorks</span>
+            <Link href="/" className="inline-block">
+              <Logo variant="full" />
             </Link>
             <p className="mt-4 max-w-sm text-sm text-slate-400">
               The Capacity Orchestration Platform. Stop searching. Start booking.
