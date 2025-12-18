@@ -13,7 +13,7 @@ import {
   Shield
 } from "lucide-react";
 import { Hero3DBackground } from "@/components/hero-3d-background";
-import { Network3D } from "@/components/network-3d";
+import { LiveMatchingVisual } from "@/components/live-matching-visual";
 import { TickerTape } from "@/components/ticker-tape";
 import { TrustStrip } from "@/components/trust-strip";
 import { DualAgentVisual } from "@/components/dual-agent-visual";
@@ -176,9 +176,9 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative"
+              className="relative h-[450px]"
             >
-              <Network3D variant="supply-chain" height="h-[450px]" />
+              <LiveMatchingVisual />
             </motion.div>
           </div>
 

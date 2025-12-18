@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Radio, Layers, Zap, Globe, Activity, Database } from "lucide-react";
-import { Network3D } from "@/components/network-3d";
+import { LiveMatchingVisual } from "@/components/live-matching-visual";
 
 const features = [
   {
@@ -108,8 +108,9 @@ export default function NetworkPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              className="h-[500px]"
             >
-              <Network3D variant="graph" height="h-[500px]" />
+              <LiveMatchingVisual />
             </motion.div>
           </div>
         </div>
