@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Twitter, Linkedin, Github } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 
 const footerLinks = {
@@ -15,8 +14,8 @@ const footerLinks = {
     { label: "Company", href: "/company" }
   ],
   Legal: [
-    { label: "Privacy", href: "#" },
-    { label: "Terms", href: "#" }
+    { label: "Privacy", href: "/privacy" },
+    { label: "Terms", href: "/terms" }
   ]
 };
 
@@ -34,24 +33,12 @@ export function Footer() {
               The Capacity Orchestration Platform. Stop searching. Start booking.
               Dual-sided AI agents that turn your team into Super Reps.
             </p>
-            <div className="mt-6 flex gap-4">
+            <div className="mt-6">
               <a
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition-colors hover:bg-white/5 hover:text-white"
+                href="mailto:hello@fleetworks.ai"
+                className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition-colors hover:bg-white/5 hover:text-white"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition-colors hover:bg-white/5 hover:text-white"
-              >
-                <Github className="h-5 w-5" />
+                hello@fleetworks.ai
               </a>
             </div>
           </div>
@@ -83,13 +70,13 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-6">
             <Link
-              href="#"
+              href="/privacy"
               className="text-sm text-slate-500 transition-colors hover:text-slate-300"
             >
               Privacy Policy
             </Link>
             <Link
-              href="#"
+              href="/terms"
               className="text-sm text-slate-500 transition-colors hover:text-slate-300"
             >
               Terms of Service

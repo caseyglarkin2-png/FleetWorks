@@ -6,7 +6,6 @@ import {
   ArrowRight,
   Truck,
   MessageSquare,
-  Phone,
   Ban,
   CheckCircle2,
   Clock,
@@ -97,13 +96,13 @@ export default function CarriersPage() {
                 Get Started
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
-              <a
-                href="tel:+18005551234"
+              <Link
+                href="/network"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 font-medium text-white transition-all hover:bg-white/10"
               >
-                <Phone className="h-5 w-5" />
-                Call Us
-              </a>
+                <Truck className="h-5 w-5" />
+                Explore the Network
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -282,13 +281,13 @@ export default function CarriersPage() {
                 Get Started
                 <ArrowRight className="h-5 w-5" />
               </Link>
-              <a
-                href="sms:+18005551234"
+              <Link
+                href="/#friction-tax"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 font-medium text-white transition-all hover:bg-white/10"
               >
                 <MessageSquare className="h-5 w-5" />
-                Text Us
-              </a>
+                See the Calculator
+              </Link>
             </div>
           </div>
         </div>
