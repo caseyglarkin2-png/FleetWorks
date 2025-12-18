@@ -1,7 +1,18 @@
 import type { Metadata } from "next";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
+
+const bodyFont = Inter({
+  subsets: ["latin"],
+  variable: "--font-body"
+});
+
+const headingFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-heading"
+});
 
 export const metadata: Metadata = {
   title: "FleetWorks | The Capacity Orchestration Platform for Freight Brokers",
@@ -13,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="text-slate-100">
+      <body className={`${bodyFont.variable} ${headingFont.variable} text-slate-100`}>
         <div className="relative min-h-screen noise">
           <NavBar />
           {children}

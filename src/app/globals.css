@@ -12,6 +12,11 @@ html, body {
 
 body {
   background: #05070f;
+  font-family: var(--font-body);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
 }
 
 /* subtle "signal noise" overlay */

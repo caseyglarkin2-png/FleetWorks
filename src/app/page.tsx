@@ -4,6 +4,8 @@ import { SupplyGraphMap } from "@/components/supply-graph-map";
 import { DualAgentVisual } from "@/components/dual-agent-visual";
 import { FrictionCalculator } from "@/components/friction-calculator";
 import { CageMatch } from "@/components/cage-match";
+import { HeroBackdrop } from "@/components/hero-backdrop";
+import { TickerTape } from "@/components/ticker-tape";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -93,15 +95,19 @@ function DemoBand() {
 export default function HomePage() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 md:py-16">
-      <section className="grid gap-10 md:grid-cols-2 md:items-center">
-        <div>
+      <section className="relative grid gap-10 md:grid-cols-2 md:items-center">
+        <HeroBackdrop />
+        <div className="relative">
           <div className="text-xs uppercase tracking-[0.35em] text-slate-400">
             Capacity Orchestration Platform
           </div>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-100 md:text-5xl">
-            {SITE.tagline}
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-slate-300">
+          <div className="relative mt-3">
+            <div className="pointer-events-none absolute -inset-x-6 -inset-y-4 rounded-[40px] bg-[radial-gradient(circle_at_40%_50%,rgba(0,220,130,0.18),transparent_60%)] blur-2xl animate-pulse" />
+            <h1 className="relative text-5xl font-semibold tracking-tight text-slate-100 md:text-6xl">
+              {SITE.tagline}
+            </h1>
+          </div>
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-300">
             {SITE.subhead}
           </p>
 
@@ -114,17 +120,25 @@ export default function HomePage() {
             </a>
           </div>
 
+          <TickerTape />
+
           <div className="mt-6">
             <TrustStrip />
           </div>
         </div>
 
-        <SupplyGraphMap />
+        <div className="relative">
+          <SupplyGraphMap />
+        </div>
       </section>
+
+      <div aria-hidden className="mt-10 h-px w-full bg-[linear-gradient(to_right,transparent,rgba(0,220,130,0.25),rgba(255,255,255,0.10),transparent)]" />
 
       <section className="mt-10">
         <ProofStrip />
       </section>
+
+      <div aria-hidden className="mt-10 h-px w-full bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.10),rgba(245,158,11,0.18),transparent)]" />
 
       <section className="mt-10 grid gap-6 md:grid-cols-2">
         <StoryArc />

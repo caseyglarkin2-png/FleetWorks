@@ -106,6 +106,21 @@ export function CageMatch() {
           </div>
         </div>
 
+        <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.02] p-6">
+          <div className="text-sm font-semibold text-slate-100">Rules of the Jungle</div>
+          <ul className="mt-2 space-y-2 text-sm text-slate-300">
+            <li>• If the pitch is “more outreach,” you’re buying congestion.</li>
+            <li>• If the system can’t prove intent, it can’t create liquidity.</li>
+            <li>• If actions aren’t auditable, risk eats the rollout.</li>
+          </ul>
+          <a
+            href="/#friction-tax"
+            className="mt-4 inline-block text-sm text-emerald-200 hover:text-emerald-100"
+          >
+            Run the Friction Tax →
+          </a>
+        </div>
+
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {COMPETITORS.map((c) => {
             const Icon = c.icon;
