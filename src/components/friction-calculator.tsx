@@ -1,247 +1,259 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Slider } from "@/components/ui/slider";
-import { Button } from "@/components/ui/button";
-import { DEFAULT_ASSUMPTIONS, type Assumptions } from "@/content/site";
-import { Settings2 } from "lucide-react";
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import * as Slider from "@radix-ui/react-slider";
+import { Calculator, TrendingUp, DollarSign, Users, ArrowRight } from "lucide-react";
 
-function fmtMoney(n: number) {
-  return n.toLocaleString(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-}
+const DEFAULT = {
+  reps: 10,
+  loadsPerRepPerDay: 5,
+  avgRevenuePerLoad: 2000,
+  currentMargin: 15,
+  volumeLiftPct: 30,
+  marginExpansionPts: 2,
+  workDays: 260
+};
 
 export function FrictionCalculator() {
-  const [reps, setReps] = useState(10);
-  const [loadsPerRep, setLoadsPerRep] = useState(15);
-  const [marginPct, setMarginPct] = useState(15);
+  const [reps, setReps] = useState(DEFAULT.reps);
+  const [loadsPerDay, setLoadsPerDay] = useState(DEFAULT.loadsPerRepPerDay);
+  const [avgRevenue, setAvgRevenue] = useState(DEFAULT.avgRevenuePerLoad);
+  const [currentMargin, setCurrentMargin] = useState(DEFAULT.currentMargin);
 
-  const [advancedOpen, setAdvancedOpen] = useState(false);
-  const [assumptions, setAssumptions] = useState<Assumptions>(DEFAULT_ASSUMPTIONS);
+  const calculations = useMemo(() => {
+    const currentLoadsPerYear = reps * loadsPerDay * DEFAULT.workDays;
+    const currentGrossRevenue = currentLoadsPerYear * avgRevenue;
+    const currentGrossProfit = currentGrossRevenue * (currentMargin / 100);
 
-  const math = useMemo(() => {
-    const currentRevenue = reps * loadsPerRep * assumptions.avgLoadRevenue;
-    const currentGrossProfit = currentRevenue * (marginPct / 100);
+    // With FleetWorks
+    const newLoadsPerYear = currentLoadsPerYear * (1 + DEFAULT.volumeLiftPct / 100);
+    const newMargin = currentMargin + DEFAULT.marginExpansionPts;
+    const newGrossRevenue = newLoadsPerYear * avgRevenue;
+    const newGrossProfit = newGrossRevenue * (newMargin / 100);
 
-    const newLoadsPerRep = loadsPerRep * (1 + assumptions.volumeLiftPct / 100);
-    const newMargin = marginPct + assumptions.marginExpansionPts;
-
-    const newRevenue = reps * newLoadsPerRep * assumptions.avgLoadRevenue;
-    const newGrossProfit = newRevenue * (newMargin / 100);
-
-    const annualOpportunity = (newGrossProfit - currentGrossProfit) * assumptions.workDays;
+    const additionalProfit = newGrossProfit - currentGrossProfit;
+    const additionalLoads = newLoadsPerYear - currentLoadsPerYear;
 
     return {
-      currentRevenue,
+      currentLoadsPerYear,
       currentGrossProfit,
-      newLoadsPerRep,
-      newMargin,
-      annualOpportunity
+      newLoadsPerYear,
+      newGrossProfit,
+      additionalProfit,
+      additionalLoads,
+      newMargin
     };
-  }, [reps, loadsPerRep, marginPct, assumptions]);
+  }, [reps, loadsPerDay, avgRevenue, currentMargin]);
+
+  const formatCurrency = (n: number) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0
+    }).format(n);
+
+  const formatNumber = (n: number) =>
+    new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
 
   return (
     <section id="friction-tax" className="scroll-mt-24">
-      <Card className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_10%,rgba(0,220,130,0.10),transparent_40%),radial-gradient(circle_at_80%_80%,rgba(245,158,11,0.08),transparent_45%)]" />
-        <div className="relative">
-          <CardHeader>
-            <div className="flex items-start justify-between gap-4">
+      <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 md:p-12">
+        {/* Header */}
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+          <div>
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/10">
+                <Calculator className="h-6 w-6 text-emerald-400" />
+              </div>
               <div>
-                <div className="text-xs uppercase tracking-[0.25em] text-slate-400">
-                  The Hook
-                </div>
-                <div className="text-2xl font-semibold text-slate-100">
-                  Calculate Your "Friction Tax"
-                </div>
-                <p className="mt-1 max-w-2xl text-sm text-slate-300">
-                  If reps spend most of the day searching, the market is taxing your margin in plain sight.
-                  Flip the model: search → match → close.
+                <h2 className="text-2xl font-semibold text-white md:text-3xl">
+                  The Friction Tax Calculator
+                </h2>
+                <p className="mt-1 text-sm text-slate-400">
+                  See what search friction costs your brokerage
                 </p>
               </div>
-
-              <Button
-                variant="ghost"
-                onClick={() => setAdvancedOpen((v) => !v)}
-                className="shrink-0"
-              >
-                <Settings2 className="mr-2 h-4 w-4" />
-                Assumptions
-              </Button>
             </div>
-          </CardHeader>
+          </div>
 
-          <CardContent>
-            <div className="grid gap-8 md:grid-cols-2">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm text-slate-300">Number of reps</label>
-                  <Slider
-                    value={[reps]}
-                    onValueChange={(v) => setReps(v[0] ?? reps)}
-                    min={1}
-                    max={120}
-                    step={1}
-                    className="mt-3"
-                  />
-                  <div className="mt-2 font-mono text-lg text-slate-100">{reps}</div>
-                </div>
-
-                <div>
-                  <label className="block text-sm text-slate-300">Avg loads / rep / day</label>
-                  <Slider
-                    value={[loadsPerRep]}
-                    onValueChange={(v) => setLoadsPerRep(v[0] ?? loadsPerRep)}
-                    min={3}
-                    max={60}
-                    step={1}
-                    className="mt-3"
-                  />
-                  <div className="mt-2 font-mono text-lg text-slate-100">{loadsPerRep}</div>
-                </div>
-
-                <div>
-                  <label className="block text-sm text-slate-300">Current gross margin %</label>
-                  <Slider
-                    value={[marginPct]}
-                    onValueChange={(v) => setMarginPct(v[0] ?? marginPct)}
-                    min={5}
-                    max={30}
-                    step={0.5}
-                    className="mt-3"
-                  />
-                  <div className="mt-2 font-mono text-lg text-slate-100">{marginPct}%</div>
-                </div>
-
-                {advancedOpen && (
-                  <div className="space-y-4 rounded-3xl border border-white/10 bg-white/[0.02] p-5">
-                    <div className="text-sm font-semibold text-slate-100">
-                      Configurable assumptions (so we can tune as we learn)
-                    </div>
-
-                    <div>
-                      <label className="block text-sm text-slate-300">Avg revenue per load</label>
-                      <Slider
-                        value={[assumptions.avgLoadRevenue]}
-                        onValueChange={(v) =>
-                          setAssumptions((s) => ({ ...s, avgLoadRevenue: v[0] ?? s.avgLoadRevenue }))
-                        }
-                        min={800}
-                        max={6000}
-                        step={50}
-                        className="mt-3"
-                      />
-                      <div className="mt-2 font-mono text-sm text-slate-200">
-                        {fmtMoney(assumptions.avgLoadRevenue)}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm text-slate-300">Volume lift %</label>
-                      <Slider
-                        value={[assumptions.volumeLiftPct]}
-                        onValueChange={(v) =>
-                          setAssumptions((s) => ({ ...s, volumeLiftPct: v[0] ?? s.volumeLiftPct }))
-                        }
-                        min={5}
-                        max={80}
-                        step={1}
-                        className="mt-3"
-                      />
-                      <div className="mt-2 font-mono text-sm text-slate-200">
-                        +{assumptions.volumeLiftPct}%
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm text-slate-300">Margin expansion (points)</label>
-                      <Slider
-                        value={[assumptions.marginExpansionPts]}
-                        onValueChange={(v) =>
-                          setAssumptions((s) => ({ ...s, marginExpansionPts: v[0] ?? s.marginExpansionPts }))
-                        }
-                        min={0}
-                        max={6}
-                        step={0.25}
-                        className="mt-3"
-                      />
-                      <div className="mt-2 font-mono text-sm text-slate-200">
-                        +{assumptions.marginExpansionPts} pts
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm text-slate-300">Working days / year</label>
-                      <Slider
-                        value={[assumptions.workDays]}
-                        onValueChange={(v) =>
-                          setAssumptions((s) => ({ ...s, workDays: v[0] ?? s.workDays }))
-                        }
-                        min={200}
-                        max={300}
-                        step={1}
-                        className="mt-3"
-                      />
-                      <div className="mt-2 font-mono text-sm text-slate-200">
-                        {assumptions.workDays}
-                      </div>
-                    </div>
-
-                    <Button
-                      variant="ghost"
-                      onClick={() => setAssumptions(DEFAULT_ASSUMPTIONS)}
-                      className="w-full"
-                    >
-                      Reset defaults
-                    </Button>
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-4">
-                <div className="rounded-3xl border border-emerald-400/15 bg-emerald-400/5 p-6">
-                  <div className="text-xs uppercase tracking-[0.25em] text-slate-400">
-                    Annual opportunity cost
-                  </div>
-                  <div className="mt-2 text-4xl font-semibold text-emerald-200">
-                    {fmtMoney(Math.max(0, math.annualOpportunity))}
-                  </div>
-                  <div className="mt-2 text-sm text-slate-300">
-                    Based on:
-                    <span className="ml-2 font-semibold text-slate-100">
-                      +{assumptions.volumeLiftPct}% loads/rep
-                    </span>
-                    <span className="mx-2 text-slate-500">+</span>
-                    <span className="font-semibold text-slate-100">
-                      +{assumptions.marginExpansionPts} pts margin
-                    </span>
-                  </div>
-                  <div className="mt-4 text-xs text-slate-500">
-                    * Use this as an "outcome frame." Then we calibrate with your actual lane mix, floor rates, and constraints.
-                  </div>
-                </div>
-
-                <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6">
-                  <div className="text-sm font-semibold text-slate-100">What changes operationally</div>
-                  <ul className="mt-2 space-y-2 text-sm text-slate-300">
-                    <li>• The AI handles routine sourcing + standard negotiations.</li>
-                    <li>• Humans handle exceptions, relationships, and messy edge cases.</li>
-                    <li>• You stop paying for "search." You pay for "close."</li>
-                  </ul>
-                </div>
-
-                <a
-                  href="#demo"
-                  className="block rounded-3xl border border-white/10 bg-white/[0.02] p-6 text-sm text-slate-200 hover:bg-white/[0.04]"
-                >
-                  <div className="font-semibold">Ready to pressure-test this?</div>
-                  <div className="mt-1 text-slate-400">Book a demo → we'll build your ROI audit in 30 minutes.</div>
-                </a>
-              </div>
+          <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 px-4 py-2">
+            <div className="text-xs text-amber-400">Based on</div>
+            <div className="text-sm font-medium text-amber-200">
+              {DEFAULT.volumeLiftPct}% volume lift + {DEFAULT.marginExpansionPts}pt margin expansion
             </div>
-          </CardContent>
+          </div>
         </div>
-      </Card>
+
+        <div className="mt-10 grid gap-12 lg:grid-cols-2">
+          {/* Sliders */}
+          <div className="space-y-8">
+            <SliderInput
+              label="Carrier Sales Reps"
+              value={reps}
+              min={1}
+              max={100}
+              step={1}
+              onChange={setReps}
+              icon={Users}
+              suffix=" reps"
+            />
+            <SliderInput
+              label="Loads per Rep per Day"
+              value={loadsPerDay}
+              min={1}
+              max={20}
+              step={1}
+              onChange={setLoadsPerDay}
+              icon={TrendingUp}
+              suffix=" loads"
+            />
+            <SliderInput
+              label="Avg Revenue per Load"
+              value={avgRevenue}
+              min={500}
+              max={5000}
+              step={100}
+              onChange={setAvgRevenue}
+              icon={DollarSign}
+              prefix="$"
+            />
+            <SliderInput
+              label="Current Gross Margin"
+              value={currentMargin}
+              min={5}
+              max={30}
+              step={1}
+              onChange={setCurrentMargin}
+              icon={TrendingUp}
+              suffix="%"
+            />
+          </div>
+
+          {/* Results */}
+          <div className="space-y-6">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+              <div className="text-xs uppercase tracking-wider text-slate-500">
+                Your Current State
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <div className="text-sm text-slate-400">Annual Loads</div>
+                  <div className="text-2xl font-semibold text-white">
+                    {formatNumber(calculations.currentLoadsPerYear)}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-slate-400">Gross Profit</div>
+                  <div className="text-2xl font-semibold text-white">
+                    {formatCurrency(calculations.currentGrossProfit)}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <motion.div
+              className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-6"
+              initial={{ scale: 0.98, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              key={calculations.additionalProfit}
+            >
+              <div className="text-xs uppercase tracking-wider text-emerald-400">
+                With FleetWorks
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <div className="text-sm text-emerald-300/70">Annual Loads</div>
+                  <div className="text-2xl font-semibold text-white">
+                    {formatNumber(calculations.newLoadsPerYear)}
+                  </div>
+                  <div className="mt-1 text-sm text-emerald-400">
+                    +{formatNumber(calculations.additionalLoads)} loads
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-emerald-300/70">Gross Profit</div>
+                  <div className="text-2xl font-semibold text-white">
+                    {formatCurrency(calculations.newGrossProfit)}
+                  </div>
+                  <div className="mt-1 text-sm text-emerald-400">
+                    at {calculations.newMargin}% margin
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 border-t border-emerald-500/20 pt-6">
+                <div className="text-sm text-emerald-300/70">
+                  Additional Annual Profit
+                </div>
+                <div className="text-4xl font-bold text-emerald-400">
+                  {formatCurrency(calculations.additionalProfit)}
+                </div>
+              </div>
+            </motion.div>
+
+            <a
+              href="#demo"
+              className="group flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-4 font-medium text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
+            >
+              Get Your Custom Analysis
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
+  );
+}
+
+function SliderInput({
+  label,
+  value,
+  min,
+  max,
+  step,
+  onChange,
+  icon: Icon,
+  prefix = "",
+  suffix = ""
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (v: number) => void;
+  icon: typeof Users;
+  prefix?: string;
+  suffix?: string;
+}) {
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Icon className="h-4 w-4 text-slate-500" />
+          <span className="text-sm text-slate-300">{label}</span>
+        </div>
+        <span className="font-mono text-lg font-medium text-white">
+          {prefix}
+          {value.toLocaleString()}
+          {suffix}
+        </span>
+      </div>
+      <Slider.Root
+        className="relative flex h-5 w-full cursor-pointer touch-none select-none items-center"
+        value={[value]}
+        min={min}
+        max={max}
+        step={step}
+        onValueChange={([v]) => onChange(v)}
+      >
+        <Slider.Track className="relative h-2 grow overflow-hidden rounded-full bg-white/10">
+          <Slider.Range className="absolute h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400" />
+        </Slider.Track>
+        <Slider.Thumb className="block h-5 w-5 rounded-full border-2 border-emerald-400 bg-gray-900 shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-500/50" />
+      </Slider.Root>
+    </div>
   );
 }
