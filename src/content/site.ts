@@ -6,7 +6,9 @@ export const SITE = {
   brand: {
     logo: {
       src: "/logos/fleetworks/fleetworks.png",
-      alt: "FleetWorks"
+      alt: "FleetWorks",
+      kind: "wordmark" as const,
+      invertOnDark: true
     }
   },
   ctas: {
