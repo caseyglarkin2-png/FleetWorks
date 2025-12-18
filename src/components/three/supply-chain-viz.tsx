@@ -2,80 +2,57 @@
 
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Line, Text } from "@react-three/drei";
 import * as THREE from "three";
-
-interface DataPulse {
-  progress: number;
-  speed: number;
-  edge: number;
-  active: boolean;
-}
 
 export function SupplyChainVisualization() {
   const groupRef = useRef<THREE.Group>(null);
-  const pulsesRef = useRef<DataPulse[]>([]);
 
   // Define the supply chain network structure
   const network = useMemo(() => {
     const nodes = [
       // Brokers (left side)
-      { id: "b1", position: new THREE.Vector3(-3, 1.5, 0), type: "broker", label: "Broker" },
-      { id: "b2", position: new THREE.Vector3(-3, 0, 0), type: "broker", label: "Broker" },
-      { id: "b3", position: new THREE.Vector3(-3, -1.5, 0), type: "broker", label: "Broker" },
+      { position: new THREE.Vector3(-2.5, 1.2, 0), type: "broker" },
+      { position: new THREE.Vector3(-2.5, 0, 0), type: "broker" },
+      { position: new THREE.Vector3(-2.5, -1.2, 0), type: "broker" },
       
       // FleetWorks Hub (center)
-      { id: "hub", position: new THREE.Vector3(0, 0, 0), type: "hub", label: "FleetWorks" },
+      { position: new THREE.Vector3(0, 0, 0), type: "hub" },
       
       // Carriers (right side)
-      { id: "c1", position: new THREE.Vector3(3, 1.5, 0), type: "carrier", label: "Carrier" },
-      { id: "c2", position: new THREE.Vector3(3, 0.5, 0), type: "carrier", label: "Carrier" },
-      { id: "c3", position: new THREE.Vector3(3, -0.5, 0), type: "carrier", label: "Carrier" },
-      { id: "c4", position: new THREE.Vector3(3, -1.5, 0), type: "carrier", label: "Carrier" },
+      { position: new THREE.Vector3(2.5, 1.2, 0), type: "carrier" },
+      { position: new THREE.Vector3(2.5, 0.4, 0), type: "carrier" },
+      { position: new THREE.Vector3(2.5, -0.4, 0), type: "carrier" },
+      { position: new THREE.Vector3(2.5, -1.2, 0), type: "carrier" },
     ];
 
-    const edges = [
-      // Broker to Hub connections
-      { from: 0, to: 3 },
-      { from: 1, to: 3 },
-      { from: 2, to: 3 },
-      // Hub to Carrier connections
-      { from: 3, to: 4 },
-      { from: 3, to: 5 },
-      { from: 3, to: 6 },
-      { from: 3, to: 7 },
+    const edgeIndices = [
+      [0, 3], [1, 3], [2, 3], // broker to hub
+      [3, 4], [3, 5], [3, 6], [3, 7], // hub to carrier
     ];
 
-    // Initialize pulses
-    pulsesRef.current = edges.map((_, idx) => ({
-      progress: Math.random(),
-      speed: 0.3 + Math.random() * 0.3,
-      edge: idx,
-      active: Math.random() > 0.3
-    }));
+    // Build edge points array for lineSegments
+    const edgePoints: number[] = [];
+    edgeIndices.forEach(([from, to]) => {
+      edgePoints.push(
+        nodes[from].position.x, nodes[from].position.y, nodes[from].position.z,
+        nodes[to].position.x, nodes[to].position.y, nodes[to].position.z
+      );
+    });
 
-    return { nodes, edges };
+    return { nodes, edgePoints: new Float32Array(edgePoints) };
   }, []);
 
-  useFrame((state, delta) => {
+  // Edges geometry
+  const edgesGeometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(network.edgePoints, 3));
+    return geo;
+  }, [network.edgePoints]);
+
+  useFrame((state) => {
     if (!groupRef.current) return;
-
-    // Subtle rotation
-    groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
-
-    // Update pulses
-    pulsesRef.current.forEach((pulse) => {
-      if (pulse.active) {
-        pulse.progress += delta * pulse.speed;
-        if (pulse.progress > 1) {
-          pulse.progress = 0;
-          pulse.active = Math.random() > 0.3;
-        }
-      } else if (Math.random() < 0.005) {
-        pulse.active = true;
-        pulse.progress = 0;
-      }
-    });
+    // Gentle sway
+    groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.15;
   });
 
   const getNodeColor = (type: string) => {
@@ -87,112 +64,32 @@ export function SupplyChainVisualization() {
     }
   };
 
-  const getNodeSize = (type: string) => {
-    switch (type) {
-      case "hub": return 0.25;
-      default: return 0.12;
-    }
-  };
+  const getNodeSize = (type: string) => type === "hub" ? 0.2 : 0.1;
 
   return (
     <group ref={groupRef}>
-      {/* Edges with gradient */}
-      {network.edges.map((edge, idx) => {
-        const from = network.nodes[edge.from].position;
-        const to = network.nodes[edge.to].position;
-        return (
-          <Line
-            key={`edge-${idx}`}
-            points={[from, to]}
-            color="#ffffff"
-            opacity={0.2}
-            transparent
-            lineWidth={1}
-          />
-        );
-      })}
+      {/* Edges */}
+      <lineSegments geometry={edgesGeometry}>
+        <lineBasicMaterial color="#ffffff" transparent opacity={0.15} />
+      </lineSegments>
 
       {/* Nodes */}
       {network.nodes.map((node, idx) => (
-        <group key={`node-${idx}`} position={node.position}>
-          {/* Node sphere */}
-          <mesh>
-            <sphereGeometry args={[getNodeSize(node.type), 32, 32]} />
-            <meshBasicMaterial
-              color={getNodeColor(node.type)}
-              transparent
-              opacity={node.type === "hub" ? 1 : 0.8}
-            />
-          </mesh>
-          
-          {/* Glow ring for hub */}
-          {node.type === "hub" && (
-            <mesh rotation={[Math.PI / 2, 0, 0]}>
-              <ringGeometry args={[0.3, 0.35, 32]} />
-              <meshBasicMaterial color="#f59e0b" transparent opacity={0.5} side={THREE.DoubleSide} />
-            </mesh>
-          )}
-          
-          {/* Point light for each node */}
-          <pointLight
+        <mesh key={`node-${idx}`} position={node.position}>
+          <sphereGeometry args={[getNodeSize(node.type), 16, 16]} />
+          <meshBasicMaterial
             color={getNodeColor(node.type)}
-            intensity={node.type === "hub" ? 0.8 : 0.3}
-            distance={2}
+            transparent
+            opacity={node.type === "hub" ? 1 : 0.8}
           />
-        </group>
+        </mesh>
       ))}
 
-      {/* Animated data pulses */}
-      {network.edges.map((edge, idx) => {
-        const from = network.nodes[edge.from].position;
-        const to = network.nodes[edge.to].position;
-        const pulse = pulsesRef.current[idx];
-        
-        if (!pulse?.active) return null;
-
-        const position = from.clone().lerp(to, pulse.progress);
-        const isToHub = edge.to === 3;
-        
-        return (
-          <mesh key={`pulse-${idx}`} position={position}>
-            <sphereGeometry args={[0.04, 16, 16]} />
-            <meshBasicMaterial
-              color={isToHub ? "#10b981" : "#3b82f6"}
-              transparent
-              opacity={0.9}
-            />
-          </mesh>
-        );
-      })}
-
-      {/* Labels */}
-      <Text
-        position={[-3, 2.3, 0]}
-        fontSize={0.2}
-        color="#10b981"
-        anchorX="center"
-      >
-        BROKERS
-      </Text>
-      <Text
-        position={[0, 1, 0]}
-        fontSize={0.15}
-        color="#f59e0b"
-        anchorX="center"
-      >
-        FLEETWORKS
-      </Text>
-      <Text
-        position={[3, 2.3, 0]}
-        fontSize={0.2}
-        color="#3b82f6"
-        anchorX="center"
-      >
-        CARRIERS
-      </Text>
-
-      {/* Ambient lighting */}
-      <ambientLight intensity={0.2} />
+      {/* Hub ring */}
+      <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.25, 0.28, 32]} />
+        <meshBasicMaterial color="#f59e0b" transparent opacity={0.4} side={THREE.DoubleSide} />
+      </mesh>
     </group>
   );
 }

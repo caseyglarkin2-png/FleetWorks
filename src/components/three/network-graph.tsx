@@ -2,13 +2,11 @@
 
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Line, Sphere } from "@react-three/drei";
 import * as THREE from "three";
 
 interface NetworkNode {
   position: THREE.Vector3;
   type: "broker" | "carrier" | "load";
-  connections: number[];
 }
 
 interface NetworkGraphProps {
@@ -16,17 +14,16 @@ interface NetworkGraphProps {
   animated?: boolean;
 }
 
-export function NetworkGraph({ nodeCount = 30, animated = true }: NetworkGraphProps) {
+export function NetworkGraph({ nodeCount = 25, animated = true }: NetworkGraphProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const pulseRef = useRef(0);
 
   const network = useMemo(() => {
     const nodes: NetworkNode[] = [];
-    const edges: [THREE.Vector3, THREE.Vector3][] = [];
+    const edgePoints: THREE.Vector3[] = [];
 
     // Create nodes in a spherical distribution
     for (let i = 0; i < nodeCount; i++) {
-      const radius = 2 + Math.random() * 1.5;
+      const radius = 1.5 + Math.random() * 1.5;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
 
@@ -39,33 +36,41 @@ export function NetworkGraph({ nodeCount = 30, animated = true }: NetworkGraphPr
       const types: Array<"broker" | "carrier" | "load"> = ["broker", "carrier", "load"];
       nodes.push({
         position,
-        type: types[i % 3],
-        connections: []
+        type: types[i % 3]
       });
     }
 
-    // Create connections (edges) between nearby nodes
+    // Create connections between nearby nodes - collect all edge points
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const distance = nodes[i].position.distanceTo(nodes[j].position);
-        if (distance < 1.5 && Math.random() > 0.4) {
-          nodes[i].connections.push(j);
-          nodes[j].connections.push(i);
-          edges.push([nodes[i].position, nodes[j].position]);
+        if (distance < 1.2 && Math.random() > 0.5) {
+          edgePoints.push(nodes[i].position.clone(), nodes[j].position.clone());
         }
       }
     }
 
-    return { nodes, edges };
+    return { nodes, edgePoints };
   }, [nodeCount]);
+
+  // Create line segments geometry for all edges
+  const edgesGeometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    const positions = new Float32Array(network.edgePoints.length * 3);
+    network.edgePoints.forEach((pt, i) => {
+      positions[i * 3] = pt.x;
+      positions[i * 3 + 1] = pt.y;
+      positions[i * 3 + 2] = pt.z;
+    });
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    return geo;
+  }, [network.edgePoints]);
 
   useFrame((state) => {
     if (!groupRef.current || !animated) return;
-    
     const time = state.clock.elapsedTime;
-    groupRef.current.rotation.y = time * 0.1;
-    groupRef.current.rotation.x = Math.sin(time * 0.05) * 0.2;
-    pulseRef.current = Math.sin(time * 2) * 0.5 + 0.5;
+    groupRef.current.rotation.y = time * 0.08;
+    groupRef.current.rotation.x = Math.sin(time * 0.05) * 0.1;
   });
 
   const getNodeColor = (type: string) => {
@@ -77,46 +82,24 @@ export function NetworkGraph({ nodeCount = 30, animated = true }: NetworkGraphPr
     }
   };
 
-  const getNodeSize = (type: string) => {
-    switch (type) {
-      case "broker": return 0.08;
-      case "carrier": return 0.06;
-      case "load": return 0.05;
-      default: return 0.05;
-    }
-  };
-
   return (
     <group ref={groupRef}>
-      {/* Edges */}
-      {network.edges.map((edge, idx) => (
-        <Line
-          key={`edge-${idx}`}
-          points={[edge[0], edge[1]]}
-          color="#ffffff"
-          opacity={0.15}
-          transparent
-          lineWidth={1}
-        />
-      ))}
+      {/* Edges as line segments */}
+      <lineSegments geometry={edgesGeometry}>
+        <lineBasicMaterial color="#ffffff" transparent opacity={0.1} />
+      </lineSegments>
 
       {/* Nodes */}
       {network.nodes.map((node, idx) => (
-        <Sphere
-          key={`node-${idx}`}
-          position={node.position}
-          args={[getNodeSize(node.type), 16, 16]}
-        >
+        <mesh key={`node-${idx}`} position={node.position}>
+          <sphereGeometry args={[0.06, 12, 12]} />
           <meshBasicMaterial
             color={getNodeColor(node.type)}
             transparent
-            opacity={0.9}
+            opacity={0.85}
           />
-        </Sphere>
+        </mesh>
       ))}
-
-      {/* Ambient glow */}
-      <pointLight color="#10b981" intensity={0.5} position={[0, 0, 0]} />
     </group>
   );
 }

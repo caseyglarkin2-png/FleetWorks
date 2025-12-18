@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const SceneWrapper = dynamic(
@@ -26,6 +26,12 @@ interface Network3DProps {
 }
 
 export function Network3D({ variant = "graph", className = "", height = "h-[500px]" }: Network3DProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -37,24 +43,25 @@ export function Network3D({ variant = "graph", className = "", height = "h-[500p
       {/* Gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5" />
       
-      {/* 3D Scene */}
-      <Suspense fallback={
-        <div className="flex h-full items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-emerald-500 border-t-transparent" />
-        </div>
-      }>
-        <SceneWrapper
-          camera={{ position: [0, 0, 5], fov: 60 }}
-          style={{ background: "transparent" }}
-        >
-          {variant === "graph" ? (
-            <NetworkGraph nodeCount={35} animated />
-          ) : (
-            <SupplyChainVisualization />
-          )}
-          <fog attach="fog" args={["#030712", 4, 12]} />
-        </SceneWrapper>
-      </Suspense>
+      {/* 3D Scene - only render after mount */}
+      {mounted && (
+        <Suspense fallback={
+          <div className="flex h-full items-center justify-center">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-emerald-500 border-t-transparent" />
+          </div>
+        }>
+          <SceneWrapper
+            camera={{ position: [0, 0, 6], fov: 50 }}
+            style={{ background: "transparent" }}
+          >
+            {variant === "graph" ? (
+              <NetworkGraph nodeCount={25} animated />
+            ) : (
+              <SupplyChainVisualization />
+            )}
+          </SceneWrapper>
+        </Suspense>
+      )}
       
       {/* Corner accents */}
       <div className="pointer-events-none absolute left-4 top-4 h-8 w-8 border-l-2 border-t-2 border-emerald-500/30" />

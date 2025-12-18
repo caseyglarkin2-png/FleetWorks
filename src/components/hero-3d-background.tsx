@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 
 // Dynamically import R3F components to avoid SSR issues
 const SceneWrapper = dynamic(
@@ -25,6 +25,12 @@ interface Hero3DBackgroundProps {
 }
 
 export function Hero3DBackground({ variant = "hero", className = "" }: Hero3DBackgroundProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className={`pointer-events-none absolute inset-0 -z-10 overflow-hidden ${className}`}>
       {/* Fallback gradient for loading/SSR */}
@@ -45,22 +51,23 @@ export function Hero3DBackground({ variant = "hero", className = "" }: Hero3DBac
         }}
       />
       
-      {/* 3D Scene */}
-      <Suspense fallback={null}>
-        <SceneWrapper
-          camera={{ position: [0, 0, 6], fov: 60 }}
-          style={{ background: "transparent" }}
-        >
-          <ParticleField 
-            count={variant === "hero" ? 400 : 200} 
-            color="#10b981" 
-            size={0.012}
-            speed={0.15}
-          />
-          <FloatingElements variant={variant} />
-          <fog attach="fog" args={["#030712", 5, 15]} />
-        </SceneWrapper>
-      </Suspense>
+      {/* 3D Scene - only render after mount */}
+      {mounted && (
+        <Suspense fallback={null}>
+          <SceneWrapper
+            camera={{ position: [0, 0, 8], fov: 50 }}
+            style={{ background: "transparent" }}
+          >
+            <ParticleField 
+              count={variant === "hero" ? 200 : 100} 
+              color="#10b981" 
+              size={0.02}
+              speed={0.1}
+            />
+            <FloatingElements variant={variant} />
+          </SceneWrapper>
+        </Suspense>
+      )}
       
       {/* Radial fade at bottom */}
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-gray-950 to-transparent" />
