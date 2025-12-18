@@ -20,8 +20,7 @@ export const SITE = {
   ],
   partners: [
     { name: "Highway", logoSrc: "/logos/partners/highway.png" },
-    { name: "Truckstop", logoSrc: "/logos/partners/truckstop.png" },
-    { name: "Augment", logoSrc: "/logos/partners/augment.png" }
+    { name: "Truckstop", logoSrc: "/logos/partners/truckstop.png" }
   ],
   trust: ["Highway Verified", "Truckstop Verified", "Auditability by Design"],
   video: {

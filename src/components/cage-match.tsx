@@ -32,7 +32,6 @@ const COMPETITORS: Competitor[] = [
     name: "Augie",
     tag: "Next-gen agent bet",
     icon: Zap,
-    logoSrc: "/logos/competitors/augment.png",
     whyTheyMatter:
       "Elite builders and capital. This camp is serious about automation as the new interface.",
     theirPlay:
