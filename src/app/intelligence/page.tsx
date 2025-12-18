@@ -17,7 +17,7 @@ const capabilities = [
   {
     icon: Target,
     title: "Intent Prediction",
-    description: "ML models that predict carrier availability before they even post—based on historical patterns, lane preferences, and timing signals."
+    description: "ML models that predict carrier availability before they even post. Based on historical patterns, lane preferences, and timing signals."
   },
   {
     icon: BarChart3,
@@ -27,7 +27,7 @@ const capabilities = [
   {
     icon: Cpu,
     title: "Match Optimization",
-    description: "Multi-factor optimization that balances rate, reliability, and relationship history to find the best match—not just the cheapest."
+    description: "Multi-factor optimization that balances rate, reliability, and relationship history to find the best match. Not just the cheapest."
   },
   {
     icon: Sparkles,
@@ -81,7 +81,7 @@ export default function IntelligencePage() {
             </h1>
             <p className="mt-6 text-xl text-slate-300">
               Most freight AI just calls more carriers faster. That creates
-              congestion. FleetWorks intelligence creates liquidity—by matching
+              congestion. FleetWorks intelligence creates liquidity by matching
               verified intent to verified capacity.
             </p>
           </motion.div>
@@ -107,7 +107,7 @@ export default function IntelligencePage() {
               <p className="mt-4 text-lg text-slate-300">
                 Every hour your reps spend searching is margin lost. Every call to
                 a carrier who isn&apos;t interested is wasted capacity. The freight
-                market&apos;s default mode—searching, calling, negotiating—is a
+                market&apos;s default mode (searching, calling, negotiating) is a
                 hidden tax on your business.
               </p>
               <p className="mt-4 text-lg text-slate-300">

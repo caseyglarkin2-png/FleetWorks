@@ -9,17 +9,17 @@ const features = [
   {
     icon: Radio,
     title: "Real-Time Intent",
-    description: "Carrier capacity isn't static inventory—it's living intent. We capture it, verify it, and make it queryable."
+    description: "Carrier capacity isn't static inventory. It's living intent. We capture it, verify it, and make it queryable."
   },
   {
     icon: Layers,
     title: "Multi-Dimensional Matching",
-    description: "Lane preferences, equipment types, rate thresholds, timing windows—all indexed and searchable in milliseconds."
+    description: "Lane preferences, equipment types, rate thresholds, timing windows. All indexed and searchable in milliseconds."
   },
   {
     icon: Database,
     title: "Trust Signals",
-    description: "Highway & Truckstop verification, performance history, payment terms—built into every match decision."
+    description: "Highway & Truckstop verification, performance history, payment terms. Built into every match decision."
   }
 ];
 

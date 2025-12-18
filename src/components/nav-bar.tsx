@@ -29,7 +29,7 @@ const platformItems = [
     label: "For Carriers",
     href: "/carriers",
     icon: Truck,
-    description: "Loads that fit your lanes—no spam"
+    description: "Loads that fit your lanes. No spam."
   },
   {
     label: "The Network",

@@ -36,7 +36,7 @@ export function DemoForm() {
 
             <p className="mt-4 text-lg text-slate-300">
               Book a 30-minute demo. We&apos;ll map your workflow, your lane mix, and
-              your trust constraints—then show you exactly how FleetWorks fits.
+              your trust constraints. Then we&apos;ll show you exactly how FleetWorks fits.
             </p>
 
             <ul className="mt-8 space-y-4">

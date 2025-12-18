@@ -2,7 +2,7 @@ export const SITE = {
   name: "FleetWorks",
   tagline: "Stop Searching. Start Booking.",
   subhead:
-    "The Capacity Orchestration Platform that eliminates search friction. Dual-sided AI agents align verified carrier intent with broker demand—turning your team into Super Reps.",
+    "The Capacity Orchestration Platform that eliminates search friction. Dual-sided AI agents align verified carrier intent with broker demand, turning your team into Super Reps.",
   brand: {
     logo: {
       src: "/logos/fleetworks/fleetworks.png",

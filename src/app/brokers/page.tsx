@@ -56,7 +56,7 @@ const useCases = [
   },
   {
     title: "Finance & Strategy",
-    description: "Predictable margin expansion. FleetWorks doesn't just move freight—it moves the needle on your P&L.",
+    description: "Predictable margin expansion. FleetWorks doesn't just move freight. It moves the needle on your P&L.",
     outcomes: [
       "Measurable ROI",
       "Margin capture",

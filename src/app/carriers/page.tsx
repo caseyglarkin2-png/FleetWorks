@@ -18,7 +18,7 @@ const benefits = [
   {
     icon: MessageSquare,
     title: "Text or Voice. That's It.",
-    description: "No apps to download. No portals to log into. Just tell us your lanes, your rates, and your availability—via text or call."
+    description: "No apps to download. No portals to log into. Just tell us your lanes, your rates, and your availability. Via text or call."
   },
   {
     icon: Ban,
@@ -28,7 +28,7 @@ const benefits = [
   {
     icon: Route,
     title: "Loads That Fit Your Lanes",
-    description: "Tell us where you like to run and what rates work. We match you with freight that fits—not freight that doesn't."
+    description: "Tell us where you like to run and what rates work. We match you with freight that fits. Not freight that doesn't."
   },
   {
     icon: Clock,
@@ -83,7 +83,7 @@ export default function CarriersPage() {
             </h1>
             <p className="mt-6 text-xl text-slate-300">
               Stop waiting for calls. Stop scrolling load boards. FleetWorks
-              surfaces loads that fit your lanes—via text or voice. No apps. No
+              surfaces loads that fit your lanes. Via text or voice. No apps. No
               spam. Just freight that works.
             </p>
 
@@ -209,12 +209,12 @@ export default function CarriersPage() {
               </p>
               <p className="mt-4 text-lg text-slate-300">
                 FleetWorks fixes this by matching verified intent. We only connect
-                you with loads that actually fit your operation—and we never spam.
+                you with loads that actually fit your operation. And we never spam.
               </p>
 
               <ul className="mt-8 space-y-4">
                 {[
-                  "Respect your time—no spam calls",
+                  "Respect your time. No spam calls",
                   "Loads that fit your lanes and rates",
                   "Simple text/voice interface",
                   "Quick payment from verified brokers"

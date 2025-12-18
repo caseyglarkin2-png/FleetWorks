@@ -71,7 +71,7 @@ export default function SecurityPage() {
             </h1>
             <p className="mt-6 text-xl text-slate-300">
               In freight, a broken promise costs real money. FleetWorks builds
-              trust into every layer—verified identity, auditable actions, and
+              trust into every layer: verified identity, auditable actions, and
               human escalation paths.
             </p>
           </motion.div>

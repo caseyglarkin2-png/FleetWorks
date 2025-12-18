@@ -129,7 +129,7 @@ export function DualAgentVisual() {
         <p className="text-sm text-slate-300">
           <span className="font-medium text-white">Result:</span>{" "}
           Verified intent meets verified capacity.{" "}
-          <span className="text-emerald-400">Match first, then engage</span>—not
+          <span className="text-emerald-400">Match first, then engage</span>. Not
           the other way around.
         </p>
       </motion.div>

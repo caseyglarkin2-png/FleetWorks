@@ -86,7 +86,7 @@ export default function CompanyPage() {
               <p className="mt-6 text-lg text-slate-300">
                 Freight brokerage is stuck in a paradox: technology has made it
                 easier to reach carriers, but harder to find capacity. Every
-                brokerage can now call 10x more carriers—which means every carrier
+                brokerage can now call 10x more carriers. That means every carrier
                 gets 10x more calls.
               </p>
               <p className="mt-4 text-lg text-slate-300">
@@ -95,7 +95,7 @@ export default function CompanyPage() {
               <p className="mt-4 text-lg text-slate-300">
                 FleetWorks is building the alternative: a system that matches
                 verified intent to verified capacity, so engagement happens after
-                the match is probable—not before.
+                the match is probable. Not before.
               </p>
             </motion.div>
 

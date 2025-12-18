@@ -33,12 +33,12 @@ const heroContent: Record<Persona, { headline: string; subhead: string }> = {
   broker: {
     headline: "Stop Searching.\nStart Booking.",
     subhead:
-      "The Capacity Orchestration Platform that eliminates search friction. Dual-sided AI agents align verified carrier intent with broker demand—turning your team into Super Reps."
+      "The Capacity Orchestration Platform that eliminates search friction. Dual-sided AI agents align verified carrier intent with broker demand, turning your team into Super Reps."
   },
   operator: {
     headline: "Your Capacity.\nTheir Demand.\nMatched.",
     subhead:
-      "Stop waiting for calls. FleetWorks surfaces loads that fit your lanes, equipment, and rate thresholds—via text or voice. No apps. No spam. Just freight that works."
+      "Stop waiting for calls. FleetWorks surfaces loads that fit your lanes, equipment, and rate thresholds. Via text or voice. No apps. No spam. Just freight that works."
   }
 };
 
@@ -55,7 +55,7 @@ const features: { iconType: FeatureIcon; title: string; description: string }[] 
     iconType: "engine",
     title: "Intent-to-Liquidity Engine",
     description:
-      "We don't spray the market. We match verified intent to verified capacity—then engage. Signal, not noise."
+      "We don't spray the market. We match verified intent to verified capacity, then engage. Signal, not noise."
   },
   {
     iconType: "network",
@@ -315,11 +315,11 @@ export default function HomePage() {
               <p className="mt-6 text-lg text-slate-300">
                 The agentic freight gold rush is real. Everyone is building
                 cheaper ways to call more carriers. That strategy increases
-                congestion—it doesn&apos;t solve capacity.
+                congestion. It doesn&apos;t solve capacity.
               </p>
               <p className="mt-4 text-lg text-slate-300">
                 FleetWorks wins by generating signal: verified intent, matched on
-                demand, with auditable actions. The result is liquidity—not
+                demand, with auditable actions. The result is liquidity, not
                 louder phones.
               </p>
 
@@ -351,7 +351,7 @@ export default function HomePage() {
               </h3>
               <p className="mt-4 text-slate-400">
                 Plenty of players are building AI that calls more carriers. That
-                creates noise. FleetWorks wins by generating signal—verified
+                creates noise. FleetWorks wins by generating signal: verified
                 intent, matched on demand, with auditable actions.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
@@ -380,7 +380,7 @@ export default function HomePage() {
         id="audiences"
         number="07"
         title="Built for Both Sides"
-        description="FleetWorks serves brokers and carriers alike—creating a true two-sided marketplace."
+        description="FleetWorks serves brokers and carriers alike, creating a true two-sided marketplace."
         className="py-24"
       >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -396,7 +396,7 @@ export default function HomePage() {
               {
                 icon: Truck,
                 title: "For Carriers",
-                description: "The dispatcher that works for you. Loads that fit your lanes—via text or voice.",
+                description: "The dispatcher that works for you. Loads that fit your lanes, via text or voice.",
                 href: "/carriers",
                 color: "amber"
               },
