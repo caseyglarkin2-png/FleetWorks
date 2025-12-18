@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 
-const bodyFont = Inter({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-body"
+  variable: "--font-inter"
 });
 
-const headingFont = Space_Grotesk({
+const space = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-heading"
+  variable: "--font-space"
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains"
 });
 
 export const metadata: Metadata = {
@@ -24,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${bodyFont.variable} ${headingFont.variable} text-slate-100`}>
+      <body className={`${inter.variable} ${space.variable} ${jetbrains.variable} text-slate-100`}>
         <div className="relative min-h-screen noise">
           <NavBar />
           {children}
