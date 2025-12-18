@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fleet-works-66py.vercel.app/sitemap.xml

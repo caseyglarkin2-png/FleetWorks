@@ -14,6 +14,8 @@ import {
   Route
 } from "lucide-react";
 
+// Note: metadata is in carriers/layout.tsx
+
 const benefits = [
   {
     icon: MessageSquare,

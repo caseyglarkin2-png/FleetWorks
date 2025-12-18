@@ -13,6 +13,8 @@ import {
   TrendingUp
 } from "lucide-react";
 
+// Note: metadata is in intelligence/layout.tsx
+
 const capabilities = [
   {
     icon: Target,

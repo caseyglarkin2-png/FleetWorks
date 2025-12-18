@@ -14,6 +14,8 @@ import {
   BarChart3
 } from "lucide-react";
 
+// Note: metadata is in brokers/layout.tsx
+
 const benefits = [
   {
     icon: TrendingUp,

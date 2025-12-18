@@ -14,6 +14,8 @@ import {
   BadgeCheck
 } from "lucide-react";
 
+// Note: metadata is in security/layout.tsx
+
 const trustPrinciples = [
   {
     icon: Eye,

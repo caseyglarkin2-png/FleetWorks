@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Users, Target, Zap, Building2 } from "lucide-react";
 
+// Note: metadata is in company/layout.tsx
+
 const values = [
   {
     icon: Target,

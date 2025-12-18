@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ArrowRight, Radio, Layers, Zap, Globe, Activity, Database } from "lucide-react";
 import { LiveMatchingVisual } from "@/components/live-matching-visual";
 
+// Note: metadata is in network/layout.tsx
+
 const features = [
   {
     icon: Radio,
