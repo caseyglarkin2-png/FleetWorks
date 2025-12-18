@@ -96,6 +96,22 @@ export function Footer() {
             </Link>
           </div>
         </div>
+        
+        {/* Proposal Credit */}
+        <div className="mt-8 flex flex-col items-center justify-center gap-2 border-t border-white/5 pt-8 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5">
+            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+            <span className="text-xs font-medium uppercase tracking-widest text-emerald-400">
+              DWTB?! Proposal
+            </span>
+          </div>
+          <p className="mt-2 text-sm text-slate-500">
+            Web concept & design proposal for FleetWorks
+          </p>
+          <p className="text-xs text-slate-600">
+            This is a proposal document, not a production website.
+          </p>
+        </div>
       </div>
     </footer>
   );

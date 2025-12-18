@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
+import { ProposalHeader } from "@/components/proposal-header";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 
 const inter = Inter({
@@ -20,9 +21,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FleetWorks | The Capacity Orchestration Platform for Freight Brokers",
+  title: "FleetWorks | DWTB?! Web Proposal",
   description:
-    "Stop searching. Start booking. Dual-sided AI agents align verified carrier intent with broker demand—turning teams into Super Reps.",
+    "Web proposal for FleetWorks - The Capacity Orchestration Platform. Stop searching. Start booking.",
   metadataBase: new URL("https://example.com")
 };
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.variable} ${space.variable} ${jetbrains.variable} text-slate-100`}>
         <div className="relative min-h-screen noise">
+          <ProposalHeader />
           <NavBar />
           {children}
           <Footer />

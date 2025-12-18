@@ -20,6 +20,7 @@ import { TrustStrip } from "@/components/trust-strip";
 import { DualAgentVisual } from "@/components/dual-agent-visual";
 import { FrictionCalculator } from "@/components/friction-calculator";
 import { DemoForm } from "@/components/demo-form";
+import { ProposalIntro, ProposalSection } from "@/components/proposal-section";
 
 type Persona = "broker" | "operator";
 
@@ -68,9 +69,21 @@ export default function HomePage() {
 
   return (
     <main className="relative">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] overflow-hidden">
+      {/* Proposal Intro */}
+      <section className="relative overflow-hidden py-24">
         <Hero3DBackground variant="hero" />
+        <div className="relative">
+          <ProposalIntro />
+        </div>
+      </section>
+
+      {/* Hero Section */}
+      <ProposalSection
+        id="hero"
+        number="01"
+        title=""
+        className="relative min-h-[80vh] overflow-hidden py-16"
+      >
 
         <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-20 lg:px-8 lg:pt-32">
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
@@ -165,10 +178,15 @@ export default function HomePage() {
           {/* Ticker */}
           <TickerTape />
         </div>
-      </section>
+      </ProposalSection>
 
       {/* Stats Section */}
-      <section className="border-y border-white/5 bg-gray-950/50 py-16">
+      <ProposalSection
+        id="stats"
+        number="02"
+        title=""
+        className="border-y border-white/5 bg-gray-950/50 py-16"
+      >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid gap-8 md:grid-cols-3">
             {stats.map((stat, idx) => (
@@ -188,27 +206,18 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </ProposalSection>
 
       {/* Features Section */}
-      <section className="py-24">
+      <ProposalSection
+        id="features"
+        number="03"
+        title="Signal, Not Noise"
+        description="While others automate outreach, we automate matching. The result: fewer calls, better outcomes, expanded margins."
+        className="py-24"
+      >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mx-auto max-w-2xl text-center"
-          >
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">
-              Signal, Not Noise
-            </h2>
-            <p className="mt-4 text-lg text-slate-400">
-              While others automate outreach, we automate matching. The result:
-              fewer calls, better outcomes, expanded margins.
-            </p>
-          </motion.div>
-
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3">
             {features.map((feature, idx) => {
               const Icon = feature.icon;
               return (
@@ -232,45 +241,49 @@ export default function HomePage() {
             })}
           </div>
         </div>
-      </section>
+      </ProposalSection>
 
       {/* Dual Agent Section */}
-      <section className="py-24">
+      <ProposalSection
+        id="dual-agent"
+        number="04"
+        title="Two Agents, One Match"
+        description="Our dual-agent architecture captures intent from both sides of the market, then orchestrates the match in real-time."
+        className="py-24"
+      >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mx-auto max-w-2xl text-center"
-          >
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-slate-300">
+          <div className="mb-8 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-slate-300">
               <Zap className="h-4 w-4 text-emerald-400" />
               How It Works
             </div>
-            <h2 className="text-3xl font-semibold text-white md:text-4xl">
-              Two Agents, One Match
-            </h2>
-            <p className="mt-4 text-lg text-slate-400">
-              Our dual-agent architecture captures intent from both sides of the
-              market, then orchestrates the match in real-time.
-            </p>
-          </motion.div>
+          </div>
 
-          <div className="mt-16">
+          <div className="mt-8">
             <DualAgentVisual />
           </div>
         </div>
-      </section>
+      </ProposalSection>
 
       {/* Friction Calculator Section */}
-      <section className="bg-gray-950/50 py-24">
+      <ProposalSection
+        id="calculator"
+        number="05"
+        title=""
+        className="bg-gray-950/50 py-24"
+      >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <FrictionCalculator />
         </div>
-      </section>
+      </ProposalSection>
 
       {/* Why FleetWorks Section */}
-      <section className="py-24">
+      <ProposalSection
+        id="thesis"
+        number="06"
+        title=""
+        className="py-24"
+      >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <motion.div
@@ -348,10 +361,16 @@ export default function HomePage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </ProposalSection>
 
       {/* CTA Cards */}
-      <section className="py-24">
+      <ProposalSection
+        id="audiences"
+        number="07"
+        title="Built for Both Sides"
+        description="FleetWorks serves brokers and carriers alike—creating a true two-sided marketplace."
+        className="py-24"
+      >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid gap-6 md:grid-cols-3">
             {[
@@ -428,14 +447,19 @@ export default function HomePage() {
             })}
           </div>
         </div>
-      </section>
+      </ProposalSection>
 
       {/* Demo Form */}
-      <section className="bg-gray-950/50 py-24">
+      <ProposalSection
+        id="contact"
+        number="08"
+        title=""
+        className="bg-gray-950/50 py-24"
+      >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <DemoForm />
         </div>
-      </section>
+      </ProposalSection>
     </main>
   );
 }
