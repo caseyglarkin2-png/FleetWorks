@@ -3,6 +3,12 @@ export const SITE = {
   tagline: "Stop Searching. Start Booking.",
   subhead:
     "The Capacity Orchestration Platform that eliminates search friction. Dual-sided AI agents align verified carrier intent with broker demand—turning your team into Super Reps.",
+  brand: {
+    logo: {
+      src: "/logos/fleetworks/fleetworks.png",
+      alt: "FleetWorks"
+    }
+  },
   ctas: {
     primary: { label: "Book a Demo", href: "#demo" },
     secondary: { label: "Calculate Your Friction Tax", href: "#friction-tax" }
@@ -11,6 +17,11 @@ export const SITE = {
     { label: "Lift in loads per rep", value: "30%" },
     { label: "Gross margin expansion", value: "1–4%" },
     { label: "Phone tree success rate", value: "96%" }
+  ],
+  partners: [
+    { name: "Highway", logoSrc: "/logos/partners/highway.png" },
+    { name: "Truckstop", logoSrc: "/logos/partners/truckstop.png" },
+    { name: "Augment", logoSrc: "/logos/partners/augment.png" }
   ],
   trust: ["Highway Verified", "Truckstop Verified", "Auditability by Design"],
   video: {

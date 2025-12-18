@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import Image from "next/image";
 import { ShieldCheck, Radar, Zap, Swords, Ghost, BadgeCheck } from "lucide-react";
 
 type Competitor = {
@@ -10,6 +11,7 @@ type Competitor = {
   fwCounter: string;
   icon: any;
   tag: string;
+  logoSrc?: string;
 };
 
 const COMPETITORS: Competitor[] = [
@@ -30,6 +32,7 @@ const COMPETITORS: Competitor[] = [
     name: "Augie",
     tag: "Next-gen agent bet",
     icon: Zap,
+    logoSrc: "/logos/competitors/augment.png",
     whyTheyMatter:
       "Elite builders and capital. This camp is serious about automation as the new interface.",
     theirPlay:
@@ -131,8 +134,18 @@ export function CageMatch() {
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-2">
-                      <Icon className="h-4 w-4 text-emerald-200" />
+                    <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-2xl border border-emerald-400/20 bg-emerald-400/10">
+                      {c.logoSrc ? (
+                        <Image
+                          src={c.logoSrc}
+                          alt={c.name}
+                          width={28}
+                          height={28}
+                          className="h-6 w-6 object-contain"
+                        />
+                      ) : (
+                        <Icon className="h-4 w-4 text-emerald-200" />
+                      )}
                     </div>
                     <div>
                       <div className="text-base font-semibold text-slate-100">

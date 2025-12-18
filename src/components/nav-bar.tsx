@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/content/site";
 
@@ -16,7 +17,16 @@ export function NavBar() {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#05070f]/60 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-2xl border border-emerald-400/25 bg-emerald-400/10" />
+          <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+            <Image
+              src={SITE.brand.logo.src}
+              alt={SITE.brand.logo.alt}
+              width={32}
+              height={32}
+              className="h-7 w-7 object-contain"
+              priority
+            />
+          </div>
           <span className="text-sm font-semibold tracking-wide text-slate-100">
             {SITE.name}
           </span>
