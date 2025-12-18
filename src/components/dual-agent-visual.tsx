@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building2, Truck, Zap, ArrowLeftRight, CheckCircle2 } from "lucide-react";
+import { ArrowLeftRight, CheckCircle2 } from "lucide-react";
+import { IconBroker, IconCarrier, IconFlow } from "@/components/ui/premium-icons";
 
 export function DualAgentVisual() {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8">
+    <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-8 backdrop-blur-sm">
       <div className="mb-8 text-center">
         <h3 className="text-xl font-semibold text-white md:text-2xl">
           Dual-Agent Architecture
@@ -24,10 +25,10 @@ export function DualAgentVisual() {
           transition={{ duration: 0.5 }}
           className="relative w-full max-w-xs"
         >
-          <div className="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-6">
+          <div className="rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10">
-                <Building2 className="h-6 w-6 text-blue-400" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 ring-1 ring-blue-500/30">
+                <IconBroker className="h-6 w-6" />
               </div>
               <div>
                 <div className="font-semibold text-white">Broker Agent</div>
@@ -60,8 +61,8 @@ export function DualAgentVisual() {
           className="relative"
         >
           <div className="flex flex-col items-center gap-2">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-emerald-500/30 bg-emerald-500/10 shadow-lg shadow-emerald-500/20">
-              <Zap className="h-8 w-8 text-emerald-400" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 shadow-lg shadow-emerald-500/20 ring-1 ring-emerald-500/30">
+              <IconFlow className="h-8 w-8" />
             </div>
             <div className="text-center">
               <div className="text-xs font-medium uppercase tracking-wider text-emerald-400">
@@ -89,10 +90,10 @@ export function DualAgentVisual() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="relative w-full max-w-xs"
         >
-          <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
+          <div className="rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10">
-                <Truck className="h-6 w-6 text-amber-400" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 ring-1 ring-amber-500/30">
+                <IconCarrier className="h-6 w-6" />
               </div>
               <div>
                 <div className="font-semibold text-white">Carrier Agent</div>

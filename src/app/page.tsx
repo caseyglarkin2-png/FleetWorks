@@ -7,20 +7,25 @@ import {
   ArrowRight,
   Building2,
   Truck,
-  Zap,
   TrendingUp,
-  Shield,
-  Network,
-  CheckCircle2
+  CheckCircle2,
+  Zap,
+  Shield
 } from "lucide-react";
 import { Hero3DBackground } from "@/components/hero-3d-background";
 import { Network3D } from "@/components/network-3d";
 import { TickerTape } from "@/components/ticker-tape";
 import { TrustStrip } from "@/components/trust-strip";
 import { DualAgentVisual } from "@/components/dual-agent-visual";
-import { FrictionCalculator } from "@/components/friction-calculator";
+import { BrokerEfficiencySim } from "@/components/broker-efficiency-sim";
 import { DemoForm } from "@/components/demo-form";
 import { ProposalIntro, ProposalSection } from "@/components/proposal-section";
+import { 
+  IconEngine, 
+  IconNetwork, 
+  IconTrust, 
+  IconContainer 
+} from "@/components/ui/premium-icons";
 
 type Persona = "broker" | "operator";
 
@@ -43,21 +48,23 @@ const stats = [
   { value: "96%", label: "Carrier reach rate" }
 ];
 
-const features = [
+type FeatureIcon = "engine" | "network" | "trust";
+
+const features: { iconType: FeatureIcon; title: string; description: string }[] = [
   {
-    icon: Zap,
+    iconType: "engine",
     title: "Intent-to-Liquidity Engine",
     description:
       "We don't spray the market. We match verified intent to verified capacity—then engage. Signal, not noise."
   },
   {
-    icon: Network,
+    iconType: "network",
     title: "Live Supply Graph",
     description:
       "Real-time visualization of carrier availability, lane preferences, and rate thresholds across your network."
   },
   {
-    icon: Shield,
+    iconType: "trust",
     title: "Trust Layer Built-In",
     description:
       "Highway + Truckstop verified. Every action auditable. Escalation paths for edge cases. No black boxes."
@@ -219,7 +226,12 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid gap-8 md:grid-cols-3">
             {features.map((feature, idx) => {
-              const Icon = feature.icon;
+              const iconVariants: Record<FeatureIcon, { icon: React.ReactNode; variant: "emerald" | "blue" | "purple" }> = {
+                engine: { icon: <IconEngine className="h-7 w-7" />, variant: "emerald" },
+                network: { icon: <IconNetwork className="h-7 w-7" />, variant: "blue" },
+                trust: { icon: <IconTrust className="h-7 w-7" />, variant: "purple" }
+              };
+              const { icon, variant } = iconVariants[feature.iconType];
               return (
                 <motion.div
                   key={feature.title}
@@ -229,9 +241,9 @@ export default function HomePage() {
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="group rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition-all hover:border-emerald-500/20 hover:bg-emerald-500/5"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/10 transition-colors group-hover:border-emerald-500/30">
-                    <Icon className="h-7 w-7 text-emerald-400" />
-                  </div>
+                  <IconContainer variant={variant} size="md">
+                    {icon}
+                  </IconContainer>
                   <h3 className="mt-6 text-xl font-semibold text-white">
                     {feature.title}
                   </h3>
@@ -265,15 +277,15 @@ export default function HomePage() {
         </div>
       </ProposalSection>
 
-      {/* Friction Calculator Section */}
+      {/* Broker Efficiency Simulation */}
       <ProposalSection
-        id="calculator"
+        id="simulation"
         number="05"
         title=""
         className="bg-gray-950/50 py-24"
       >
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <FrictionCalculator />
+          <BrokerEfficiencySim />
         </div>
       </ProposalSection>
 

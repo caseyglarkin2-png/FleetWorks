@@ -30,7 +30,7 @@ export function ProposalHeader() {
           </div>
           <div>
             <span className="text-slate-400">Date:</span>{" "}
-            <span className="text-white">Dec 2024</span>
+            <span className="text-white">Dec 2025</span>
           </div>
         </div>
       </div>

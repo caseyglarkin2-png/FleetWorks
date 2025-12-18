@@ -105,7 +105,7 @@ export function ProposalIntro() {
         <div className="h-4 w-px bg-slate-700" />
         <div className="flex items-center gap-2">
           <span className="text-slate-400">December</span>
-          <span className="font-medium text-white">2024</span>
+          <span className="font-medium text-white">2025</span>
         </div>
       </div>
     </motion.div>
