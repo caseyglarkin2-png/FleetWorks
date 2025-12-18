@@ -13,6 +13,7 @@ import {
   Shield
 } from "lucide-react";
 import { Hero3DBackground } from "@/components/hero-3d-background";
+import { FreightMapHero } from "@/components/freight-map-hero";
 import { LiveMatchingVisual } from "@/components/live-matching-visual";
 import { TickerTape } from "@/components/ticker-tape";
 import { TrustStrip } from "@/components/trust-strip";
@@ -76,9 +77,9 @@ export default function HomePage() {
 
   return (
     <main className="relative">
-      {/* Proposal Intro */}
+      {/* Proposal Intro with Freight Map */}
       <section className="relative overflow-hidden py-24">
-        <Hero3DBackground variant="hero" />
+        <FreightMapHero />
         <div className="relative">
           <ProposalIntro />
         </div>
