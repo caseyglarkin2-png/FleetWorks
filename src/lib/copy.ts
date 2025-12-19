@@ -15,46 +15,69 @@ export const FEATURE_FLAGS = {
 } as const;
 
 // ============================================================================
-// PROOF METRICS
-// These are only displayed if showProofMetrics is true
+// PROOF METRICS - Hard numbers only
 // ============================================================================
 export const PROOF_METRICS = [
   { 
-    value: "30%", 
-    label: "Lift in loads per rep",
-    sublabel: "Average across pilot customers"
+    value: "12K+", 
+    label: "Verified Carriers",
+    sublabel: "Active in network"
   },
   { 
-    value: "1–4%", 
-    label: "Gross margin expansion",
-    sublabel: "Measured at 90-day mark"
+    value: "47ms", 
+    label: "Match Speed",
+    sublabel: "Intent to capacity"
   },
   { 
     value: "96%", 
-    label: "Carrier reach rate",
-    sublabel: "vs. 12% industry average"
+    label: "Carrier Reach",
+    sublabel: "vs. 12% cold outbound"
   },
 ] as const;
+
+// ============================================================================
+// HARD PROOF - Concrete claims
+// ============================================================================
+export const HARD_PROOF = {
+  title: "What Changes",
+  claims: [
+    {
+      stat: "30%",
+      claim: "More loads per rep",
+      context: "Because reps stop dialing and start closing."
+    },
+    {
+      stat: "1–4%",
+      claim: "Margin expansion",
+      context: "Verified intent eliminates rate guessing games."
+    },
+    {
+      stat: "8x",
+      claim: "Faster coverage",
+      context: "Match in seconds, not hours of phone tag."
+    },
+  ],
+} as const;
 
 // ============================================================================
 // HERO CONTENT
 // ============================================================================
 export const HERO = {
-  badge: "Capacity Orchestration Platform",
-  headline: "Stop Searching.\nStart Booking.",
-  subheadline: "The only capacity orchestration platform that eliminates freight search friction. Dual-sided AI agents align verified carrier intent with broker demand—turning your team into Super Reps.",
+  badge: "Capacity Orchestration",
+  headline: "Find the right truck.\nEvery time.",
+  subheadline: "AI that matches verified carrier intent to your loads in real-time.",
   primaryCTA: "Book a Demo",
-  secondaryCTA: "Calculate Savings",
+  secondaryCTA: "View Live Network",
 } as const;
 
 // ============================================================================
 // POSITIONING
 // ============================================================================
 export const POSITIONING = {
-  tagline: "Signal, Not Noise",
-  description: "While others automate outreach, we automate matching. The result: fewer calls, better outcomes, expanded margins.",
-  pullQuote: "More outreach buys congestion. Verified intent creates liquidity. Liquidity expands margin.",
-  attribution: "— The FleetWorks Thesis",
+  tagline: "The Thesis",
+  description: "Other platforms automate outreach. We automate matching. The difference: fewer calls, better outcomes.",
+  pullQuote: "Verified intent creates liquidity. Liquidity expands margin.",
+  attribution: "— FleetWorks",
 } as const;
 
 // ============================================================================
@@ -124,10 +147,10 @@ export const TRUST = {
 // FINAL CTA
 // ============================================================================
 export const FINAL_CTA = {
-  headline: "Orchestrate capacity.\nReduce friction.\nExpand margin.",
-  description: "See how FleetWorks can transform your carrier sales operation.",
+  headline: "See it work.",
+  description: "15-minute demo. Your lanes. Real carriers.",
   buttonText: "Book a Demo",
-  formPlaceholder: "you@company.com",
+  formPlaceholder: "work@company.com",
 } as const;
 
 // ============================================================================

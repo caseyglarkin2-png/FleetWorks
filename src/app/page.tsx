@@ -8,89 +8,81 @@ import {
   Truck,
   Shield,
   CheckCircle2,
-  Zap,
-  Activity,
-  Info,
 } from "lucide-react";
 import {
   HERO,
   POSITIONING,
-  FEATURES,
   PROOF_METRICS,
   FEATURE_FLAGS,
-  DUAL_AGENT,
-  FLYWHEEL,
   TRUST,
   FINAL_CTA,
+  HARD_PROOF,
 } from "@/lib/copy";
 import { FreightMapHero } from "@/components/freight-map-hero";
 import { DemoForm } from "@/components/demo-form";
 import { EfficiencyFlywheel } from "@/components/efficiency-flywheel";
-import { DualAgentDiagram } from "@/components/dual-agent-diagram";
 
-// Fade up animation variant
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
+// Simple fade - restrained animation
+const fade = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
 };
 
 // ============================================================================
-// HERO SECTION
+// TIER 1: HERO - The Promise
 // ============================================================================
 function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] overflow-hidden">
-      {/* Background */}
+    <section className="relative min-h-[85vh] overflow-hidden">
       <FreightMapHero />
       
-      <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-32 lg:px-8 lg:pt-40">
-        <div className="max-w-3xl">
-          {/* Badge */}
+      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-28 lg:px-8 lg:pt-36">
+        <div className="max-w-2xl">
+          {/* Minimal badge */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
-              <Activity className="h-3 w-3" />
+            <span className="text-xs font-medium uppercase tracking-wider text-emerald-400">
               {HERO.badge}
             </span>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline - one promise */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-6 text-4xl font-medium leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-4 text-4xl font-medium leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl"
             style={{ whiteSpace: "pre-line" }}
           >
             {HERO.headline}
           </motion.h1>
 
-          {/* Subheadline */}
+          {/* Subheadline - one outcome */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-5 text-lg text-slate-400"
           >
             {HERO.subheadline}
           </motion.p>
 
-          {/* CTAs */}
+          {/* CTAs - one primary, one secondary that leads to map */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-8 flex flex-wrap gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-8 flex items-center gap-4"
           >
             <Link href="#demo" className="btn-primary">
               {HERO.primaryCTA}
-              <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="#calculator" className="btn-secondary">
+            <Link href="#network" className="text-sm text-slate-400 hover:text-white transition-colors">
               {HERO.secondaryCTA}
+              <ArrowRight className="ml-1 inline h-3.5 w-3.5" />
             </Link>
           </motion.div>
         </div>
@@ -100,34 +92,94 @@ function HeroSection() {
 }
 
 // ============================================================================
-// PROOF BAR
+// KPI STRIP - Hard numbers, no fluff
 // ============================================================================
-function ProofBar() {
+function KPIStrip() {
   if (!FEATURE_FLAGS.showProofMetrics) return null;
 
   return (
-    <section className="border-y border-white/5 bg-gray-950/50 py-12">
+    <section className="border-y border-white/5 bg-gray-950/50 py-8">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-3">
-          {PROOF_METRICS.map((metric, idx) => (
+        <div className="flex items-center justify-center gap-12 md:gap-20">
+          {PROOF_METRICS.map((metric) => (
+            <div key={metric.label} className="text-center">
+              <div className="font-mono text-2xl font-medium text-white">
+                {metric.value}
+              </div>
+              <div className="mt-0.5 text-xs text-slate-500">
+                {metric.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================================
+// TIER 2: THE ARTIFACT - The Proof (Network Map / Simulator)
+// ============================================================================
+function NetworkSection() {
+  return (
+    <section id="network" className="py-20">
+      <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fade}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
+          <h2 className="text-2xl font-medium text-white">
+            The Efficiency Flywheel
+          </h2>
+          <p className="mt-2 max-w-xl text-slate-400">
+            Fair deals build loyalty. Loyalty expands your network. A larger network means better matches.
+          </p>
+        </motion.div>
+
+        {/* The centerpiece */}
+        <EfficiencyFlywheel />
+      </div>
+    </section>
+  );
+}
+
+// ============================================================================
+// HARD PROOF SECTION - Concrete claims
+// ============================================================================
+function HardProofSection() {
+  return (
+    <section className="border-y border-white/5 bg-gray-950/30 py-20">
+      <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fade}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-2xl font-medium text-white">{HARD_PROOF.title}</h2>
+        </motion.div>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {HARD_PROOF.claims.map((item, idx) => (
             <motion.div
-              key={metric.label}
+              key={item.claim}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              variants={fadeUp}
+              variants={fade}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="text-center"
+              className="border-l border-emerald-500/30 pl-6"
             >
-              <div className="font-mono text-4xl font-medium tracking-tight text-emerald-400">
-                {metric.value}
+              <div className="font-mono text-3xl font-medium text-emerald-400">
+                {item.stat}
               </div>
-              <div className="mt-1 text-sm font-medium text-white">
-                {metric.label}
-              </div>
-              <div className="mt-0.5 text-xs text-slate-500">
-                {metric.sublabel}
-              </div>
+              <div className="mt-2 font-medium text-white">{item.claim}</div>
+              <div className="mt-1 text-sm text-slate-500">{item.context}</div>
             </motion.div>
           ))}
         </div>
@@ -137,191 +189,87 @@ function ProofBar() {
 }
 
 // ============================================================================
-// SIGNAL NOT NOISE SECTION
+// TIER 3: SUPPORTING - How + Trust
 // ============================================================================
-function SignalSection() {
-  const featureIcons = {
-    engine: Zap,
-    network: Activity,
-    trust: Shield,
-  };
+function HowItWorks() {
+  const steps = [
+    {
+      icon: Building2,
+      title: "Brokers post loads",
+      desc: "Requirements, rates, constraints captured automatically."
+    },
+    {
+      icon: Truck,
+      title: "Carriers share intent",
+      desc: "Lane preferences and availability via text, voice, or app."
+    },
+    {
+      icon: CheckCircle2,
+      title: "AI matches in real-time",
+      desc: "Verified fit, not spray-and-pray."
+    },
+  ];
 
   return (
-    <section id="thesis" className="py-24">
+    <section className="py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        {/* Section header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={fadeUp}
-          className="max-w-2xl"
+          variants={fade}
+          className="mb-10"
         >
-          <h2 className="text-3xl font-medium tracking-tight text-white">
-            {POSITIONING.tagline}
-          </h2>
-          <p className="mt-4 text-lg text-slate-400">
-            {POSITIONING.description}
-          </p>
+          <h2 className="text-2xl font-medium text-white">How It Works</h2>
         </motion.div>
 
-        {/* Feature cards */}
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {FEATURES.map((feature, idx) => {
-            const Icon = featureIcons[feature.id as keyof typeof featureIcons];
+        <div className="grid gap-8 md:grid-cols-3">
+          {steps.map((step, idx) => {
+            const Icon = step.icon;
             return (
               <motion.div
-                key={feature.id}
+                key={step.title}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                variants={fadeUp}
+                variants={fade}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="card card-hover"
+                className="flex items-start gap-4"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10">
-                  <Icon className="h-5 w-5 text-emerald-400" />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                  <Icon className="h-4 w-4 text-slate-400" />
                 </div>
-                <h3 className="mt-4 text-lg font-medium text-white">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  {feature.description}
-                </p>
+                <div>
+                  <div className="font-medium text-white">{step.title}</div>
+                  <div className="mt-1 text-sm text-slate-500">{step.desc}</div>
+                </div>
               </motion.div>
             );
           })}
         </div>
-
-        {/* Pull quote */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          transition={{ delay: 0.3 }}
-          className="mt-16"
-        >
-          <blockquote className="relative rounded-xl border border-white/5 bg-white/[0.01] px-8 py-6">
-            <p className="text-lg font-medium italic text-slate-300">
-              &ldquo;{POSITIONING.pullQuote}&rdquo;
-            </p>
-            <footer className="mt-3 text-sm text-slate-500">
-              {POSITIONING.attribution}
-            </footer>
-          </blockquote>
-        </motion.div>
       </div>
     </section>
   );
 }
 
-// ============================================================================
-// DUAL AGENT SECTION
-// ============================================================================
-function DualAgentSection() {
-  return (
-    <section id="architecture" className="border-y border-white/5 bg-gray-950/30 py-24">
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="mb-12 text-center"
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-400">
-            <Zap className="h-3 w-3 text-emerald-400" />
-            How It Works
-          </span>
-          <h2 className="mt-4 text-3xl font-medium tracking-tight text-white">
-            {DUAL_AGENT.title}
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-slate-400">
-            {DUAL_AGENT.description}
-          </p>
-        </motion.div>
-
-        <DualAgentDiagram />
-      </div>
-    </section>
-  );
-}
-
-// ============================================================================
-// EFFICIENCY FLYWHEEL SECTION
-// ============================================================================
-function FlywheelSection() {
-  if (!FEATURE_FLAGS.showEfficiencyFlywheel) return null;
-
-  return (
-    <section id="flywheel" className="py-24">
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="mb-12"
-        >
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h2 className="text-3xl font-medium tracking-tight text-white">
-                {FLYWHEEL.title}
-              </h2>
-              <p className="mt-3 max-w-xl text-slate-400">
-                {FLYWHEEL.description}
-              </p>
-            </div>
-            {/* Methodology tooltip */}
-            <div className="group relative hidden lg:block">
-              <button className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-400 transition-colors hover:bg-white/10">
-                <Info className="h-3.5 w-3.5" />
-                Methodology
-              </button>
-              <div className="pointer-events-none absolute right-0 top-full z-10 mt-2 w-64 rounded-lg border border-white/10 bg-gray-900 p-3 opacity-0 shadow-xl transition-opacity group-hover:pointer-events-auto group-hover:opacity-100">
-                <p className="text-xs text-slate-400">
-                  {FLYWHEEL.methodologyNote}
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        <EfficiencyFlywheel />
-      </div>
-    </section>
-  );
-}
-
-// ============================================================================
-// TRUST SECTION
-// ============================================================================
 function TrustSection() {
   return (
-    <section id="trust" className="border-y border-white/5 bg-gray-950/30 py-24">
+    <section className="border-y border-white/5 bg-gray-950/30 py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeUp}
+            variants={fade}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10">
-              <Shield className="h-5 w-5 text-emerald-400" />
-            </div>
-            <h2 className="mt-4 text-3xl font-medium tracking-tight text-white">
-              {TRUST.title}
-            </h2>
-            <p className="mt-3 text-slate-400">
-              {TRUST.description}
-            </p>
+            <h2 className="text-2xl font-medium text-white">{TRUST.title}</h2>
+            <p className="mt-2 text-slate-400">{TRUST.description}</p>
             <ul className="mt-6 space-y-3">
               {TRUST.points.map((point) => (
-                <li key={point} className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-                  <span className="text-sm text-slate-300">{point}</span>
+                <li key={point} className="flex items-start gap-3 text-sm text-slate-400">
+                  <Shield className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500/60" />
+                  {point}
                 </li>
               ))}
             </ul>
@@ -331,28 +279,26 @@ function TrustSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ delay: 0.2 }}
-            className="card"
+            variants={fade}
+            transition={{ delay: 0.1 }}
+            className="rounded-lg border border-white/5 bg-white/[0.02] p-6"
           >
-            <div className="mb-4 text-xs font-medium uppercase tracking-wider text-slate-500">
+            <div className="text-xs font-medium uppercase tracking-wider text-slate-500">
               Verification Partners
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="mt-4 flex flex-wrap gap-3">
               {["Highway", "Truckstop", "RMIS", "Carrier411"].map((partner) => (
                 <div
                   key={partner}
-                  className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300"
+                  className="rounded bg-white/5 px-3 py-1.5 text-sm text-slate-300"
                 >
                   {partner}
                 </div>
               ))}
             </div>
-            <div className="mt-6 border-t border-white/5 pt-6">
-              <div className="flex items-center gap-2 text-sm text-slate-400">
-                <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse-subtle" />
-                All carrier verifications run in real-time
-              </div>
+            <div className="mt-6 flex items-center gap-2 text-xs text-slate-500">
+              <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              Real-time carrier verification
             </div>
           </motion.div>
         </div>
@@ -362,81 +308,32 @@ function TrustSection() {
 }
 
 // ============================================================================
-// AUDIENCE CARDS
+// AUDIENCE LINKS - Simple navigation
 // ============================================================================
-function AudienceSection() {
+function AudienceLinks() {
   const audiences = [
-    {
-      icon: Building2,
-      title: "For Brokers",
-      description: "From cost center to profit engine. Sell outcome: margin capture + loads per headcount.",
-      href: "/brokers",
-    },
-    {
-      icon: Truck,
-      title: "For Carriers",
-      description: "The dispatcher that works for you. Loads that fit your lanes, via text or voice.",
-      href: "/carriers",
-    },
-    {
-      icon: Shield,
-      title: "Security",
-      description: "Trust is the currency. Verified identity, auditable actions, escalation paths.",
-      href: "/security",
-    },
+    { title: "For Brokers", href: "/brokers", desc: "From cost center to profit engine." },
+    { title: "For Carriers", href: "/carriers", desc: "Loads that fit your lanes. No spam." },
+    { title: "Security", href: "/security", desc: "Trust layer & auditable actions." },
   ];
 
   return (
-    <section id="audiences" className="py-24">
+    <section className="py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="mb-12 text-center"
-        >
-          <h2 className="text-3xl font-medium tracking-tight text-white">
-            Built for Both Sides
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-slate-400">
-            FleetWorks serves brokers and carriers alike, creating a true two-sided marketplace.
-          </p>
-        </motion.div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {audiences.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                transition={{ delay: idx * 0.1 }}
-              >
-                <Link
-                  href={item.href}
-                  className="group block h-full card card-hover"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 transition-colors group-hover:bg-emerald-500/10">
-                    <Icon className="h-5 w-5 text-slate-400 transition-colors group-hover:text-emerald-400" />
-                  </div>
-                  <h3 className="mt-4 text-lg font-medium text-white">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-400">
-                    {item.description}
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-sm text-emerald-400 opacity-0 transition-opacity group-hover:opacity-100">
-                    Learn more
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </div>
-                </Link>
-              </motion.div>
-            );
-          })}
+        <div className="grid gap-4 md:grid-cols-3">
+          {audiences.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              className="group flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.01] p-5 transition-colors hover:bg-white/[0.03]"
+            >
+              <div>
+                <div className="font-medium text-white">{item.title}</div>
+                <div className="mt-0.5 text-sm text-slate-500">{item.desc}</div>
+              </div>
+              <ArrowRight className="h-4 w-4 text-slate-600 transition-colors group-hover:text-emerald-400" />
+            </Link>
+          ))}
         </div>
       </div>
     </section>
@@ -444,26 +341,23 @@ function AudienceSection() {
 }
 
 // ============================================================================
-// CTA SECTION
+// CTA SECTION - Simple, direct
 // ============================================================================
 function CTASection() {
   return (
-    <section id="demo" className="border-t border-white/5 bg-gray-950/50 py-24">
+    <section id="demo" className="border-t border-white/5 bg-gray-950/50 py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeUp}
+            variants={fade}
           >
-            <h2
-              className="text-3xl font-medium leading-tight tracking-tight text-white lg:text-4xl"
-              style={{ whiteSpace: "pre-line" }}
-            >
+            <h2 className="text-3xl font-medium text-white">
               {FINAL_CTA.headline}
             </h2>
-            <p className="mt-4 text-lg text-slate-400">
+            <p className="mt-3 text-slate-400">
               {FINAL_CTA.description}
             </p>
           </motion.div>
@@ -472,8 +366,8 @@ function CTASection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ delay: 0.2 }}
+            variants={fade}
+            transition={{ delay: 0.1 }}
           >
             <DemoForm />
           </motion.div>
@@ -484,18 +378,23 @@ function CTASection() {
 }
 
 // ============================================================================
-// MAIN PAGE
+// MAIN PAGE - 3-Tier Structure
 // ============================================================================
 export default function HomePage() {
   return (
     <main>
+      {/* Tier 1: The Promise */}
       <HeroSection />
-      <ProofBar />
-      <SignalSection />
-      <DualAgentSection />
-      <FlywheelSection />
+      <KPIStrip />
+      
+      {/* Tier 2: The Proof (Interactive Artifact) */}
+      <NetworkSection />
+      <HardProofSection />
+      
+      {/* Tier 3: Supporting */}
+      <HowItWorks />
       <TrustSection />
-      <AudienceSection />
+      <AudienceLinks />
       <CTASection />
     </main>
   );

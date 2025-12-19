@@ -107,7 +107,7 @@ export function FreightMapHero() {
     };
   }, []);
 
-  // Generate periodic "match" events
+  // Generate periodic "match" events - less frequent for quieter feel
   useEffect(() => {
     const interval = setInterval(() => {
       const randomLane = lanes[Math.floor(Math.random() * lanes.length)];
@@ -118,8 +118,8 @@ export function FreightMapHero() {
         timestamp: Date.now()
       };
       
-      setMatches(prev => [...prev.slice(-4), newMatch]);
-    }, 2500);
+      setMatches(prev => [...prev.slice(-2), newMatch]);
+    }, 4000);
     
     return () => clearInterval(interval);
   }, []);
@@ -332,32 +332,18 @@ export function FreightMapHero() {
         })}
       </AnimatePresence>
       
-      {/* Stats overlay */}
-      <div className="absolute bottom-8 left-8 hidden space-y-1 lg:block">
-        <motion.div 
-          className="flex items-center gap-2 text-xs text-slate-500"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1 }}
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Live Capacity</span>
-        </motion.div>
-        <motion.div 
-          className="flex items-center gap-2 text-xs text-slate-500"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.2 }}
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-          <span>Active Lanes</span>
-        </motion.div>
+      {/* Stats overlay - simplified */}
+      <div className="absolute bottom-8 left-8 hidden lg:block">
+        <div className="flex items-center gap-2 text-xs text-slate-500">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          <span>Live network</span>
+        </div>
       </div>
       
       {/* Gradient overlays for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-950/80 via-transparent to-gray-950/80" />
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-gray-950 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-gray-950 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-950/70 via-transparent to-gray-950/70" />
+      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-gray-950 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-gray-950 to-transparent" />
     </div>
   );
 }
