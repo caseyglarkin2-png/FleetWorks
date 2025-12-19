@@ -1,18 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { NavBar } from "@/components/nav-bar";
-import { Footer } from "@/components/footer";
-import { ProposalHeader } from "@/components/proposal-header";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { NavBar } from "@/components/nav-bar-new";
+import { Footer } from "@/components/footer-new";
+import { Inter, JetBrains_Mono } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter"
-});
-
-const space = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space"
 });
 
 const jetbrains = JetBrains_Mono({
@@ -96,9 +90,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${space.variable} ${jetbrains.variable} text-slate-100`}>
-        <div className="relative min-h-screen noise">
-          <ProposalHeader />
+      <body className={`${inter.variable} ${jetbrains.variable} font-sans text-slate-100`}>
+        <div className="relative min-h-screen noise grid-bg">
           <NavBar />
           {children}
           <Footer />
