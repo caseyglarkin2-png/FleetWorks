@@ -2,24 +2,34 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Radio, Layers, Zap, Globe, Activity, Database } from "lucide-react";
 import { LiveMatchingVisual } from "@/components/live-matching-visual";
+import {
+  FlowRadio,
+  FlowLayers,
+  FlowDatabase,
+  FlowNetwork,
+  FlowArrow,
+  FlowIconContainer,
+} from "@/components/ui/flow-icons";
 
 // Note: metadata is in network/layout.tsx
 
 const features = [
   {
-    icon: Radio,
+    icon: FlowRadio,
+    iconColor: "emerald" as const,
     title: "Real-Time Intent",
     description: "Carrier capacity isn't static inventory. It's living intent. We capture it, verify it, and make it queryable."
   },
   {
-    icon: Layers,
+    icon: FlowLayers,
+    iconColor: "blue" as const,
     title: "Multi-Dimensional Matching",
     description: "Lane preferences, equipment types, rate thresholds, timing windows. All indexed and searchable in milliseconds."
   },
   {
-    icon: Database,
+    icon: FlowDatabase,
+    iconColor: "purple" as const,
     title: "Trust Signals",
     description: "Highway & Truckstop verification, performance history, payment terms. Built into every match decision."
   }
@@ -47,7 +57,7 @@ export default function NetworkPage() {
             className="mx-auto max-w-3xl text-center"
           >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-sm text-emerald-400">
-              <Activity className="h-4 w-4" />
+              <FlowNetwork className="h-4 w-4" color="emerald" animated />
               The Network
             </div>
             <h1 className="text-4xl font-semibold text-white md:text-5xl lg:text-6xl">
@@ -101,7 +111,7 @@ export default function NetworkPage() {
                   className="group inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 font-medium text-white transition-all hover:bg-emerald-400"
                 >
                   See It Live
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <FlowArrow className="h-5 w-5 transition-transform group-hover:translate-x-1" color="white" />
                 </Link>
               </div>
             </motion.div>
@@ -147,9 +157,9 @@ export default function NetworkPage() {
                   transition={{ delay: idx * 0.1 }}
                   className="rounded-3xl border border-white/10 bg-white/[0.02] p-8"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/10">
-                    <Icon className="h-7 w-7 text-emerald-400" />
-                  </div>
+                  <FlowIconContainer color={feature.iconColor} size="lg">
+                    <Icon className="h-7 w-7" color={feature.iconColor} animated />
+                  </FlowIconContainer>
                   <h3 className="mt-6 text-xl font-semibold text-white">
                     {feature.title}
                   </h3>
@@ -165,7 +175,7 @@ export default function NetworkPage() {
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/10 via-transparent to-blue-500/10 p-12 text-center">
-            <Globe className="mx-auto h-12 w-12 text-emerald-400" />
+            <FlowNetwork className="mx-auto h-12 w-12" color="emerald" animated />
             <h2 className="mt-6 text-3xl font-semibold text-white">
               Ready to see your network?
             </h2>
@@ -178,7 +188,7 @@ export default function NetworkPage() {
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-4 font-medium text-white transition-all hover:bg-emerald-400"
             >
               Book a Demo
-              <ArrowRight className="h-5 w-5" />
+              <FlowArrow className="h-5 w-5" color="white" />
             </Link>
           </div>
         </div>

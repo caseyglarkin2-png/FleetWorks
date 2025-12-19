@@ -3,13 +3,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
-  ArrowRight,
-  Building2,
-  Truck,
-  Shield,
-  CheckCircle2,
-} from "lucide-react";
-import {
   HERO,
   POSITIONING,
   PROOF_METRICS,
@@ -21,6 +14,14 @@ import {
 import { FreightMapHero } from "@/components/freight-map-hero";
 import { DemoForm } from "@/components/demo-form";
 import { EfficiencyFlywheel } from "@/components/efficiency-flywheel";
+import {
+  FlowBroker,
+  FlowCapacity,
+  FlowMatch,
+  FlowTrust,
+  FlowArrow,
+  FlowIconContainer,
+} from "@/components/ui/flow-icons";
 
 // Simple fade - restrained animation
 const fade = {
@@ -80,9 +81,9 @@ function HeroSection() {
             <Link href="#demo" className="btn-primary">
               {HERO.primaryCTA}
             </Link>
-            <Link href="#network" className="text-sm text-slate-400 hover:text-white transition-colors">
+            <Link href="#network" className="group text-sm text-slate-400 hover:text-white transition-colors flex items-center">
               {HERO.secondaryCTA}
-              <ArrowRight className="ml-1 inline h-3.5 w-3.5" />
+              <FlowArrow className="ml-1.5 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" color="slate" />
             </Link>
           </motion.div>
         </div>
@@ -194,17 +195,20 @@ function HardProofSection() {
 function HowItWorks() {
   const steps = [
     {
-      icon: Building2,
+      icon: FlowBroker,
+      iconColor: "blue" as const,
       title: "Brokers post loads",
       desc: "Requirements, rates, constraints captured automatically."
     },
     {
-      icon: Truck,
+      icon: FlowCapacity,
+      iconColor: "amber" as const,
       title: "Carriers share intent",
       desc: "Lane preferences and availability via text, voice, or app."
     },
     {
-      icon: CheckCircle2,
+      icon: FlowMatch,
+      iconColor: "emerald" as const,
       title: "AI matches in real-time",
       desc: "Verified fit, not spray-and-pray."
     },
@@ -236,9 +240,9 @@ function HowItWorks() {
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="flex items-start gap-4"
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5">
-                  <Icon className="h-4 w-4 text-slate-400" />
-                </div>
+                <FlowIconContainer color={step.iconColor} size="sm">
+                  <Icon className="h-5 w-5" color={step.iconColor} />
+                </FlowIconContainer>
                 <div>
                   <div className="font-medium text-white">{step.title}</div>
                   <div className="mt-1 text-sm text-slate-500">{step.desc}</div>
@@ -268,7 +272,7 @@ function TrustSection() {
             <ul className="mt-6 space-y-3">
               {TRUST.points.map((point) => (
                 <li key={point} className="flex items-start gap-3 text-sm text-slate-400">
-                  <Shield className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500/60" />
+                  <FlowTrust className="mt-0.5 h-4 w-4 shrink-0" color="purple" />
                   {point}
                 </li>
               ))}
@@ -331,7 +335,7 @@ function AudienceLinks() {
                 <div className="font-medium text-white">{item.title}</div>
                 <div className="mt-0.5 text-sm text-slate-500">{item.desc}</div>
               </div>
-              <ArrowRight className="h-4 w-4 text-slate-600 transition-colors group-hover:text-emerald-400" />
+              <FlowArrow className="h-4 w-4 transition-colors" color="slate" />
             </Link>
           ))}
         </div>

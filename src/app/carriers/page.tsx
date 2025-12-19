@@ -3,36 +3,40 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
-  ArrowRight,
-  Truck,
-  MessageSquare,
-  Ban,
-  CheckCircle2,
-  Clock,
-  DollarSign,
-  Route
-} from "lucide-react";
+  FlowCapacity,
+  FlowMessage,
+  FlowBlock,
+  FlowRoute,
+  FlowClock,
+  FlowCheck,
+  FlowArrow,
+  FlowIconContainer,
+} from "@/components/ui/flow-icons";
 
 // Note: metadata is in carriers/layout.tsx
 
 const benefits = [
   {
-    icon: MessageSquare,
+    icon: FlowMessage,
+    iconColor: "amber" as const,
     title: "Text or Voice. That's It.",
     description: "No apps to download. No portals to log into. Just tell us your lanes, your rates, and your availability. Via text or call."
   },
   {
-    icon: Ban,
+    icon: FlowBlock,
+    iconColor: "slate" as const,
     title: "No Spam. Ever.",
     description: "We only reach out when there's a load that actually fits your preferences. Your phone isn't a telemarketing target."
   },
   {
-    icon: Route,
+    icon: FlowRoute,
+    iconColor: "emerald" as const,
     title: "Loads That Fit Your Lanes",
     description: "Tell us where you like to run and what rates work. We match you with freight that fits. Not freight that doesn't."
   },
   {
-    icon: Clock,
+    icon: FlowClock,
+    iconColor: "blue" as const,
     title: "Real-Time Updates",
     description: "When your availability changes, tell us. When a load moves, we'll tell you. Simple, two-way communication."
   }
@@ -72,7 +76,7 @@ export default function CarriersPage() {
             className="mx-auto max-w-3xl text-center"
           >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
-              <Truck className="h-4 w-4" />
+              <FlowCapacity className="h-4 w-4" color="amber" />
               For Carriers
             </div>
             <h1 className="text-4xl font-semibold text-white md:text-5xl lg:text-6xl">
@@ -94,13 +98,13 @@ export default function CarriersPage() {
                 className="group inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 font-medium text-white transition-all hover:bg-emerald-400"
               >
                 Get Started
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <FlowArrow className="h-5 w-5 transition-transform group-hover:translate-x-1" color="white" />
               </Link>
               <Link
                 href="/network"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 font-medium text-white transition-all hover:bg-white/10"
               >
-                <Truck className="h-5 w-5" />
+                <FlowCapacity className="h-5 w-5" color="amber" />
                 Explore the Network
               </Link>
             </div>
@@ -138,9 +142,9 @@ export default function CarriersPage() {
                   transition={{ delay: idx * 0.1 }}
                   className="rounded-3xl border border-white/10 bg-white/[0.02] p-8"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-500/20 bg-amber-500/10">
-                    <Icon className="h-7 w-7 text-amber-400" />
-                  </div>
+                  <FlowIconContainer color={benefit.iconColor} size="lg">
+                    <Icon className="h-7 w-7" color={benefit.iconColor} />
+                  </FlowIconContainer>
                   <h3 className="mt-6 text-xl font-semibold text-white">
                     {benefit.title}
                   </h3>
@@ -221,7 +225,7 @@ export default function CarriersPage() {
                   "Quick payment from verified brokers"
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                    <FlowCheck className="h-5 w-5" color="emerald" />
                     <span className="text-slate-300">{item}</span>
                   </li>
                 ))}
@@ -265,7 +269,7 @@ export default function CarriersPage() {
       <section className="bg-gray-950/50 py-24">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-amber-500/10 via-transparent to-emerald-500/10 p-12 text-center">
-            <Truck className="mx-auto h-12 w-12 text-amber-400" />
+            <FlowCapacity className="mx-auto h-12 w-12" color="amber" animated />
             <h2 className="mt-6 text-3xl font-semibold text-white">
               Ready to get loads that actually fit?
             </h2>
@@ -279,13 +283,13 @@ export default function CarriersPage() {
                 className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-4 font-medium text-white transition-all hover:bg-emerald-400"
               >
                 Get Started
-                <ArrowRight className="h-5 w-5" />
+                <FlowArrow className="h-5 w-5" color="white" />
               </Link>
               <Link
                 href="/#friction-tax"
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 font-medium text-white transition-all hover:bg-white/10"
               >
-                <MessageSquare className="h-5 w-5" />
+                <FlowMessage className="h-5 w-5" color="blue" />
                 See the Calculator
               </Link>
             </div>

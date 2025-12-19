@@ -3,34 +3,35 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
-  ArrowRight,
-  Building2,
-  TrendingUp,
-  Users,
-  DollarSign,
-  Clock,
-  Target,
-  CheckCircle2,
-  BarChart3
-} from "lucide-react";
+  FlowChart,
+  FlowDollar,
+  FlowClock,
+  FlowBroker,
+  FlowCheck,
+  FlowArrow,
+  FlowIconContainer,
+} from "@/components/ui/flow-icons";
 
 // Note: metadata is in brokers/layout.tsx
 
 const benefits = [
   {
-    icon: TrendingUp,
+    icon: FlowChart,
+    iconColor: "blue" as const,
     value: "30%",
     label: "More loads per rep",
     description: "Stop searching, start booking. Your reps cover more loads with less effort."
   },
   {
-    icon: DollarSign,
+    icon: FlowDollar,
+    iconColor: "emerald" as const,
     value: "1-4%",
     label: "Margin expansion",
     description: "Better matches mean better rates. Margin goes up when friction goes down."
   },
   {
-    icon: Clock,
+    icon: FlowClock,
+    iconColor: "amber" as const,
     value: "< 2 min",
     label: "Average response time",
     description: "Carriers respond faster when you're reaching them with relevant loads."
@@ -83,7 +84,7 @@ export default function BrokersPage() {
             className="mx-auto max-w-3xl text-center"
           >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-sm text-blue-400">
-              <Building2 className="h-4 w-4" />
+              <FlowBroker className="h-4 w-4" color="blue" />
               For Brokers
             </div>
             <h1 className="text-4xl font-semibold text-white md:text-5xl lg:text-6xl">
@@ -102,7 +103,7 @@ export default function BrokersPage() {
                 className="group inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 font-medium text-white transition-all hover:bg-emerald-400"
               >
                 Book a Demo
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <FlowArrow className="h-5 w-5 transition-transform group-hover:translate-x-1" color="white" />
               </Link>
               <Link
                 href="/#friction-tax"
@@ -130,8 +131,10 @@ export default function BrokersPage() {
                   transition={{ delay: idx * 0.1 }}
                   className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 text-center"
                 >
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-500/20 bg-blue-500/10">
-                    <Icon className="h-7 w-7 text-blue-400" />
+                  <div className="mx-auto">
+                    <FlowIconContainer color={benefit.iconColor} size="lg">
+                      <Icon className="h-7 w-7" color={benefit.iconColor} animated />
+                    </FlowIconContainer>
                   </div>
                   <div className="mt-6 text-4xl font-semibold text-emerald-400">
                     {benefit.value}
@@ -178,7 +181,7 @@ export default function BrokersPage() {
                 <ul className="mt-6 space-y-3">
                   {uc.outcomes.map((outcome) => (
                     <li key={outcome} className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                      <FlowCheck className="h-5 w-5" color="emerald" />
                       <span className="text-sm text-slate-300">{outcome}</span>
                     </li>
                   ))}
@@ -218,7 +221,7 @@ export default function BrokersPage() {
                 className="mt-8 inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 font-medium text-white transition-all hover:bg-emerald-400"
               >
                 See It In Action
-                <ArrowRight className="h-5 w-5" />
+                <FlowArrow className="h-5 w-5" color="white" />
               </Link>
             </motion.div>
 
@@ -228,7 +231,7 @@ export default function BrokersPage() {
               viewport={{ once: true }}
               className="rounded-3xl border border-white/10 bg-white/[0.02] p-8"
             >
-              <BarChart3 className="h-12 w-12 text-blue-400" />
+              <FlowChart className="h-12 w-12" color="blue" animated />
               <h3 className="mt-6 text-xl font-semibold text-white">
                 What Your Peers Are Seeing
               </h3>
